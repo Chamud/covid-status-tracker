@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<body>
+	<!-- Header -->
+		<header id="header">
+			<h1>This is header</h1>
+			<nav id="nav">
+				<h2>This is the navigation bar</h2>
+				<ul>
+					<li><a href="../">Home</a></li>
+					<li><a href="/tracker">Symptom Tracker</a></li>
+					<li><a href="/map">Map</a></li>
+				</ul>
+			</nav>
+		</header>
+
+<hr>
+
+	{% block content %}
+
+	{% endblock %}
+
+
+<hr>
+	<!-- Footer -->
+			<footer id="footer">
+				<h1> This is Footer</h1>
+			</footer>
+</body>
+</html>
