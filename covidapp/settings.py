@@ -25,7 +25,7 @@ SECRET_KEY = 'ljp+l-vzs)t_1#@#k3%#ubks+6*$hpmv18sxf^e2$m9=hz#z-d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['covidstatustracker.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
