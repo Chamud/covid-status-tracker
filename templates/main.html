@@ -11,10 +11,13 @@
 			<nav id="nav">
 				<h2>This is the navigation bar</h2>
 				<ul>
-					<li><a href="../">Home</a></li>
-					<li><a href="/tracker">Symptom Tracker</a></li>
-					<li><a href="/map">Map</a></li>
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'tracker' %}">Symptom Tracker</a></li>
+					<li><a href="{% url 'map' %}">Map</a></li>
+					<li><a href="{% url 'login' %}">Login/Register</a></li>
+					<li><a href="{% url 'logout' %}">Logout</a></li>
 				</ul>
+				
 			</nav>
 		</header>
 

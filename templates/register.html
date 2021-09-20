@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<body>
+	<p>Register here</p>
+
+	<form method="POST" action="">
+		{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value="Register">
+	</form>
+	{{form.errors}}
+
+	<p>Already have an account? </p> <a href="{% url 'login' %}">Login</a>
+	<a href="{% url 'home' %}">Home</a>
+</body>
+</html>

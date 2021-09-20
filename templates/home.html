@@ -4,6 +4,18 @@
 {% block content %}
 
 <h1>This is home of Covid Status Tracker</h1>
+
+{% if user.is_anonymous %}
+	<p>Please login to use the symptom tracker</p>
+{% else %}
+	<p> Hello, {{ request.user }}</p>
+{% endif %}
+
+
+{% for message in messages %}
+	<p>{{ message }}</p>
+{% endfor %}
+
 <img src="{% static 'images/home.png' %}">
 
 {% endblock %}
