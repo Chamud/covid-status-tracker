@@ -6,4 +6,8 @@
 <h1>This is the Symptom Tracker interface</h1>
 <img src="{% static 'images/tracker.png' %}">
 
+{% for message in messages %}
+	<p>{{ message }}</p>
+{% endfor %}
+
 {% endblock %}

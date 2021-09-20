@@ -5,15 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from pymongo import MongoClient
+
 # Create your views here.
 from .forms import CreateUserForm
 
 def home(request):
 	return render(request, 'home.html')
-
-@login_required(login_url='login')
-def tracker(request):
-	return render(request, 'symptomtracker/tracker.html')
 
 def register(request):
 	form = CreateUserForm()
@@ -52,3 +50,13 @@ def loginuser(request):
 def logoutuser(request):
 	logout(request)
 	return redirect('home')
+
+
+@login_required(login_url='login')
+def tracker(request):
+	client = MongoClient("mongodb+srv://CmongoUser:cMongoUserPublic@cluster0.uq72y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+	db = client.get_database('CST')
+	records = db.UserData
+	n = records.count_documents({})
+	messages.info(request, 'Number of users = ' + str(n))
+	return render(request, 'symptomtracker/tracker.html')
