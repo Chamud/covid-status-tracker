@@ -6,7 +6,7 @@
 <h1>This is home of Covid Status Tracker</h1>
 
 {% if user.is_anonymous %}
-	<p>Please login to use the symptom tracker</p>
+	<p>Please <a href="{% url 'login' %}">login</a> to use all the features</p>
 {% else %}
 	<p> Hello, {{ request.user }}</p>
 {% endif %}
