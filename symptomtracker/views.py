@@ -25,7 +25,7 @@ def register(request):
 			return redirect('login')
 
 	context = {'form':form}
-	return render(request, 'register.html', context)
+	return render(request, 'accounts/register.html', context)
 	
 
 def loginuser(request):
@@ -45,7 +45,7 @@ def loginuser(request):
 			else:
 				messages.info(request, 'Username OR password is incorrect')
 
-	return render(request, 'login.html')
+	return render(request, 'accounts/login.html')
 
 def logoutuser(request):
 	logout(request)
@@ -60,3 +60,4 @@ def tracker(request):
 	n = records.count_documents({})
 	messages.info(request, 'Number of users = ' + str(n))
 	return render(request, 'symptomtracker/tracker.html')
+
