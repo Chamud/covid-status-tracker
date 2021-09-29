@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 from pymongo import MongoClient
 
+from decouple import config
+
 # Create your views here.
 from .forms import CreateUserForm
 
@@ -54,7 +56,7 @@ def logoutuser(request):
 
 @login_required(login_url='login')
 def tracker(request):
-	client = MongoClient("mongodb+srv://CmongoUser:cMongoUserPublic@cluster0.uq72y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+	client = MongoClient(config('DB_CONNECTION'))
 	db = client.get_database('CST')
 	records = db.UserData
 	n = records.count_documents({})
