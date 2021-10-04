@@ -1,14 +1,11 @@
-.wrapper{
+body{
 	background: #388EE9;
+	background-repeat: no-repeat;
 	background: -webkit-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
 	background: -moz-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
 	background: -o-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
 	background: linear-gradient(to bottom right, #388EE9 0%, #09EBEE 100%);
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+
 }
 .iceblock {
     -webkit-background-size: cover;
@@ -16,6 +13,7 @@
     -o-background-size: cover;
     -ms-background-size: cover;
 	position: relative;
+	margin-bottom: 0;
 }
 
 .iceblock:before {
@@ -46,6 +44,7 @@
     max-width: 500px;
     margin: 6em auto;
 }
+
 .text-center {
     text-align: center;
 }
@@ -163,88 +162,140 @@ a, a:visited, a:hover, a:active {
 
 
 /* -- Responsive code -- */
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1680px) {
     .content-w3ls {
         margin: 4em auto;
     }
+    .content-bottom {
+        
+        margin-bottom: 20%;
+    }
+    .iceblock:before {
+    content: '';
+    position: absolute;
+    top: 8%;
+    left: 30%;
+    right: 30%;
+    bottom: -5%;
+
+	}
+	.iceblock:after {
+    content: '';
+    position: absolute;
+    top: 8%;
+    left: 30%;
+    right: 30%;
+    bottom: -5%;
+	}
+	.iceblock{
+		padding-top: 40px;
+	}
 }
 @media screen and (max-width: 1080px) {
-    .bottom-grid,.bottom-grid1 {
-		margin: 0em 5em;
+   
+	.content-bottom {
+        
+        margin-bottom: 25%;
+    }
+    .iceblock:before {
+    content: '';
+    position: absolute;
+    top: 8%;
+    left: 20%;
+    right: 20%;
+    bottom: -5%;
+
 	}
-	.icon span.fa {
-		font-size: 50px;
+	.iceblock:after {
+    content: '';
+    position: absolute;
+    top: 8%;
+    left: 20%;
+    right: 20%;
+    bottom: -5%;
+	}
+	.iceblock{
+		padding-top: 15px;
 	}
 }
-@media screen and (max-width: 900px) {
-   .bottom-grid, .bottom-grid1 {
-		margin: 0em 2em;
+
+@media screen and (max-width: 700px) {
+
+
+    .iceblock:before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: -5%;
+
 	}
-}
-@media screen and (max-width: 800px) {
-	.bottom-grid1 {
-		flex-direction: column;
-		text-align: center;
+	.iceblock:after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: -5%;
+
 	}
-	.copyright {
-		margin-top: 1em;
+	.iceblock{
+		padding-top: 20px;
 	}
-}
-@media screen and (max-width: 768px) {
-	.logo h1 a {
-		font-size: 22px;
-	}
-}
-@media screen and (max-width: 668px) {
     
     .content-w3ls {
-        margin: 3em auto;
+        margin: 20%, 25%;
     }
-	ul.links-unordered-list li a,.copyright p {
-		font-size: 15px;
-	}
-	ul.links-unordered-list li {
-		margin-right: 0px;
-	}
-	ul.list-login {
-		margin-bottom: .5em;
-	}
+
 	.icon {
 		margin-bottom: 2em;
 	}
 	.icon span.fa {
 		font-size: 40px;
 	}
-	ul.list-login-bottom li:nth-child(1) a, ul.list-login-bottom li:nth-child(2) a {
-		font-size: 14px;
-	}
-}
-@media screen and (max-width: 600px) {
-    .copyright p {
-        color: #fff;
-        letter-spacing: 1px;
+	.content-bottom {
+        
+        margin-bottom: 119px;
     }
+
 }
+
 @media screen and (max-width: 568px) {
     .content-bottom {
-        padding: 0em 2.5em;
+        padding: 2em 2.5em;
+        margin-bottom: 25%;
     }
 	.content-w3ls {
 		margin: 3em auto 2em;
 		max-width: 450px;
 	}
-}
+	.iceblock{
+		padding-top: 25px;
+	}
+	.iceblock:before {
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: -5%;
 
-@media screen and (max-width: 480px) {
-	  .logo h1 a {
-		font-size: 20px;
+	}
+	.iceblock:after {
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: -5%;
+
 	}
 }
 
+
 @media screen and (max-width: 415px) {
-	.content-bottom {
-        margin-top: 25%;
-    }
+
     .iceblock{
     	margin-top: 80px;
     }
@@ -266,36 +317,24 @@ a, a:visited, a:hover, a:active {
     bottom: -5%;
 
 	}
+	
 
-    .bottom-grid, .bottom-grid1 {
-		flex-direction: column;
-		text-align: center;
-	}
-	.logo {
-		margin-bottom: 10px;
-	}
 	form .field-group {
 		padding: 0px 10px 0px 0;
 	}
 	.wthree-field button.btn {
 		font-size: 15px;
 	}
-	ul.list-login-bottom li:nth-child(1) a, ul.list-login-bottom li:nth-child(2) a {
-		font-size: 13px;
-	}
-	.bottom-grid, .bottom-grid1 {
-		margin: 0em 1em;
-	}
+
 }
 
 @media screen and (max-width: 384px) {
     .content-bottom {
-		padding: 0em 1em;
+		padding-bottom: 2em;
+		margin-bottom: 50px;
 	}
-	.layer {
-		padding: 1em 0;
+	.content-w3ls{
+		padding-top: 0;
 	}
-	label.switch {
-		padding-left: 2.5em;
-	}
+
 }
