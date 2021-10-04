@@ -1,20 +1,27 @@
+{% extends 'accounts/BaseLogin.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	
-</head>
-<body>
-	<p>Register here</p>
 
-	<form method="POST" action="">
-		{% csrf_token %}
-		{{form.as_p}}
-		<input type="submit" value="Register">
-	</form>
-	{{form.errors}}
+{% block content %}
 
-	<p>Already have an account? </p> <a href="{% url 'login' %}">Login</a>
-	<a href="{% url 'home' %}">Home</a>
-</body>
-</html>
+<div class="wrapper">
+	<div class="container">
+
+		<h1>Register here</h1>
+
+		<form method="POST" action="">
+			{% csrf_token %}
+			{{form.as_p}}
+			<button type="submit">Register</button>
+		</form>
+		{% for message in messages %}
+			<p>{{ message }}</p>
+		{% endfor %}
+
+		<div class="login-navigation">
+			<p>Already have an account? <a href="{% url 'login' %}">Login</a></p> 
+			<a href="{% url 'home' %}">Home</a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

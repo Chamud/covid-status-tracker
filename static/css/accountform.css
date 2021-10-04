@@ -1,0 +1,252 @@
+.wrapper{
+	background: #388EE9;
+	background: -webkit-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
+	background: -moz-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
+	background: -o-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
+	background: linear-gradient(to bottom right, #388EE9 0%, #09EBEE 100%);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.container {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+	position: relative;
+}
+.content-w3ls {
+    max-width: 500px;
+    margin: 6em auto;
+}
+.text-center {
+    text-align: center;
+}
+.content-bottom {
+    padding: 0em 4em;
+    margin: 0 1em;
+	position: relative; 
+    z-index: 1;
+}
+form .field-group {
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    display: flex;
+    display: -webkit-box;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;
+    /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;
+    /* TWEENER - IE 10 */
+    display: -webkit-flex;
+    /* NEW - Chrome */
+    margin-bottom: 20px;
+    padding: 2px 10px 2px 0;
+	border-radius: 35px;
+	-webkit-border-radius: 35px;
+	-moz-border-radius: 35px;
+	-ms-border-radius: 35px;
+	-o-border-radius: 35px;
+}
+
+form .field-group span {
+    flex: 1;
+    -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;         /* OLD - Firefox 19- */
+    width: 20%;               /* For old syntax, otherwise collapses. */
+    -webkit-flex: 1;          /* Chrome */
+    -ms-flex: 1;              /* IE 10 */
+    color: #fff;
+    background: transparent;
+    line-height: 49px;
+    text-align: right;
+}
+form .field-group .wthree-field {
+    flex: 4 50%;
+    -webkit-box-flex:4 50%;     /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 4 50%;        /* OLD - Firefox 19- */
+    -webkit-flex: 4 50%;          /* Chrome */
+    -ms-flex: 4 50%;             /* IE 10 */
+}
+
+.wthree-field button.btn {
+    background: #1167b1;
+    border: none;
+    color: #58CCED;
+    padding: 11px 15px;
+    text-transform: uppercase;
+	font-family: 'Mukta', sans-serif;
+    font-size: 16px;
+	width:100%;
+	margin-top:10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+	border-radius: 35px;
+	-webkit-border-radius: 35px;
+	-moz-border-radius: 35px;
+	-ms-border-radius: 35px;
+	-o-border-radius: 35px;
+	box-shadow: -3px 8px 10px #072F5F;
+}
+.field-group:hover, .wthree-field button.btn:hover{
+	transform: translate(2px, -2px);
+	transform: scale(1.05);
+}
+
+.home{
+	display: block;
+	font-size: 1rem;
+	margin-top: -10px;
+}
+.homeicon{
+	margin-top: 50px;
+	display: block;
+	font-size: 3rem;
+	color:#ddd;
+}
+
+.wthree-field input {
+    padding: 15px 0 10px 15px;
+    font-size: 17px;
+    font-weight: 300;
+	color:#ddd;
+    letter-spacing: 1px;
+    border: none;
+    background: transparent;
+    box-sizing: border-box;
+	font-family: 'Mukta', sans-serif;
+    width: 100%;
+    outline: none;
+}
+.login-navigation{
+	margin-top: 30px;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
+
+/* -- Responsive code -- */
+@media screen and (max-width: 1280px) {
+    .content-w3ls {
+        margin: 4em auto;
+    }
+}
+@media screen and (max-width: 1080px) {
+    .bottom-grid,.bottom-grid1 {
+		margin: 0em 5em;
+	}
+	.icon span.fa {
+		font-size: 50px;
+	}
+}
+@media screen and (max-width: 900px) {
+   .bottom-grid, .bottom-grid1 {
+		margin: 0em 2em;
+	}
+}
+@media screen and (max-width: 800px) {
+	.bottom-grid1 {
+		flex-direction: column;
+		text-align: center;
+	}
+	.copyright {
+		margin-top: 1em;
+	}
+}
+@media screen and (max-width: 768px) {
+	.logo h1 a {
+		font-size: 22px;
+	}
+}
+@media screen and (max-width: 668px) {
+    
+    .content-w3ls {
+        margin: 3em auto;
+    }
+	ul.links-unordered-list li a,.copyright p {
+		font-size: 15px;
+	}
+	ul.links-unordered-list li {
+		margin-right: 0px;
+	}
+	ul.list-login {
+		margin-bottom: .5em;
+	}
+	.icon {
+		margin-bottom: 2em;
+	}
+	.icon span.fa {
+		font-size: 40px;
+	}
+	ul.list-login-bottom li:nth-child(1) a, ul.list-login-bottom li:nth-child(2) a {
+		font-size: 14px;
+	}
+}
+@media screen and (max-width: 600px) {
+    .copyright p {
+        color: #fff;
+        letter-spacing: 1px;
+    }
+}
+@media screen and (max-width: 568px) {
+    .content-bottom {
+        padding: 0em 2.5em;
+    }
+	.content-w3ls {
+		margin: 3em auto 2em;
+		max-width: 450px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	  .logo h1 a {
+		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 415px) {
+	.content-bottom {
+        margin-top: 25%;
+    }
+
+    .bottom-grid, .bottom-grid1 {
+		flex-direction: column;
+		text-align: center;
+	}
+	.logo {
+		margin-bottom: 10px;
+	}
+	form .field-group {
+		padding: 0px 10px 0px 0;
+	}
+	.wthree-field button.btn {
+		font-size: 15px;
+	}
+	ul.list-login-bottom li:nth-child(1) a, ul.list-login-bottom li:nth-child(2) a {
+		font-size: 13px;
+	}
+	.bottom-grid, .bottom-grid1 {
+		margin: 0em 1em;
+	}
+}
+
+@media screen and (max-width: 384px) {
+    .content-bottom {
+		padding: 0em 1em;
+	}
+	.layer {
+		padding: 1em 0;
+	}
+	label.switch {
+		padding-left: 2.5em;
+	}
+}

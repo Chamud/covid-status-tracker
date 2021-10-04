@@ -16,3 +16,4 @@ s3transfer==0.5.0
 six==1.15.0
 urllib3==1.26.4
 whitenoise==5.3.0
+scikit-fuzzy==0.4.2
