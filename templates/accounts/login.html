@@ -4,50 +4,48 @@
 {% block content %}
 
 <div class="iceblock">
-	<div
-		<div class="content-w3ls">
-			<div class="text-center">
-				<h1>Welcome!</h1>
-			</div>
-			<div class="content-bottom">
+	<div class="content-w3ls">
+		<div class="text-center">
+			<h1>Login</h1>
+		</div>
+		<div class="content-bottom">
 
-				<form class="form" method="POST">
-					{% csrf_token %}
-					<div class="field-group">
-						<span class="fa fa-user" aria-hidden="true"></span>
-						<div class="wthree-field">
-							<input type="text" name="username" placeholder="Enter the username" required>
-						</div>
-					</div>
-					<div class="field-group">
-						<span class="fa fa-lock" aria-hidden="true"></span>
-						<div class="wthree-field">
-							<input type="password" name="password" placeholder="Enter the password" required>
-						</div>
-					</div>
+			<form class="form" method="POST">
+				{% csrf_token %}
+				<div class="field-group">
+					<span class="fa fa-user" aria-hidden="true"></span>
 					<div class="wthree-field">
-						<button type="submit" class="btn" id="login-button">Login</button>
+						<input type="text" name="username" placeholder="Enter the username" required>
 					</div>
-					
-				</form>
-
-				<span class="text-center err" >
-					{% for message in messages %}
-						<p>{{ message }}</p>
-					{% endfor %}
-				</span>
-
-				<div class="login-navigation text-center">
-					<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p> 
-					<p>Forgot your password?<a href="{% url 'reset_password' %}"> Reset</a></p>
-					<div class="homeicon text-center" >
-						<a href="{% url 'home' %}"><span class="fa fa-home" aria-hidden="true"></span></a>
-						<spanhomeicon class="home">Home</span>
+				</div>
+				<div class="field-group">
+					<span class="fa fa-lock" aria-hidden="true"></span>
+					<div class="wthree-field">
+						<input type="password" name="password" placeholder="Enter the password" required>
 					</div>
-					
+				</div>
+				<div class="wthree-field">
+					<button type="submit" class="btn" id="login-button">Login</button>
+				</div>
+				
+			</form>
+
+			<span class="text-center err" >
+				{% for message in messages %}
+					<p>{{ message }}</p>
+				{% endfor %}
+			</span>
+
+			<div class="login-navigation text-center">
+				<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p> 
+				<p>Forgot your password?<a href="{% url 'reset_password' %}"> Reset</a></p>
+				<div class="homeicon text-center" >
+					<a href="{% url 'home' %}"><span class="fa fa-home" aria-hidden="true"></span></a>
+					<span class="home">Home</span>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
 
 {% endblock %}

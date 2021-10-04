@@ -3,25 +3,78 @@
 
 {% block content %}
 
-<div class="wrapper">
-	<div class="container">
+<div class="iceblock">
+	<div class="content-w3ls">
+		<div class="text-center">
+			<h1>Registration</h1>
+		</div>
+		<div class="content-bottom">
 
-		<h1>Register here</h1>
+			<form class="form" method="POST">
+				{% csrf_token %}
 
-		<form method="POST" action="">
-			{% csrf_token %}
-			{{form.as_p}}
-			<button type="submit">Register</button>
-		</form>
-		{% for message in messages %}
-			<p>{{ message }}</p>
-		{% endfor %}
+					<div class="field-group">
+						<span class="fa fa-user" aria-hidden="true"></span>
+						<div class="wthree-field">
+							{{form.username}}
+						</div>
+					</div>
+					<span class="err" ><p>{{ form.username.errors.as_text }}</p></span>
 
-		<div class="login-navigation">
-			<p>Already have an account? <a href="{% url 'login' %}">Login</a></p> 
-			<a href="{% url 'home' %}">Home</a>
+					<div class="field-group">
+						<span class="fa fa-envelope" aria-hidden="true"></span>
+						<div class="wthree-field">
+							{{form.email}}
+						</div>
+					</div>
+					<span class="err" ><p>{{ form.email.errors.as_text }}</p></span>
+
+					<div class="field-group">
+						<span class="fa fa-unlock-alt" aria-hidden="true"></span>
+						<div class="wthree-field">
+							{{form.password1}}
+						</div>
+					</div>
+					<span class="err" ><p>{{ form.username.password1.as_text }}</p></span>
+
+					<div class="field-group">
+						<span class="fa fa-lock" aria-hidden="true"></span>
+						<div class="wthree-field">
+							{{form.password2}}
+						</div>
+					</div>
+					<span class="err" ><p>{{ form.password2.errors.as_text }}</p></span>
+				
+				<div class="wthree-field">
+					<button type="submit" class="btn" id="login-button">Register</button>
+				</div>
+				
+			</form>
+
+			<span class="text-center err" >
+				{% for message in messages %}
+					<p>{{ message }}</p>
+				{% endfor %}
+			</span>
+
+			<div class="login-navigation text-center">
+				<p>Already have an account? <a href="{% url 'login' %}">Login</a></p> 
+				<div class="homeicon text-center" >
+					<a href="{% url 'home' %}"><span class="fa fa-home" aria-hidden="true"></span></a>
+					<span class="home">Home</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
+<script type="text/javascript">
+	var fields = document.getElementsByTagName('input')
+	fields[1].placeholder='Enter the name'
+	fields[2].placeholder='Enter the email address'
+	fields[3].placeholder='Enter the password'
+	fields[4].placeholder='Re-enter the password'
+</script>
+
 {% endblock %}
+

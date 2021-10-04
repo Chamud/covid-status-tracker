@@ -127,17 +127,20 @@ form .field-group .wthree-field {
 .err{
 	color: #ba2127;
 }
+
+.homeicon{
+    margin-top: 50px;
+    display: block;
+    font-size: 3rem;
+    color: #eee;
+}
+
 .home{
 	display: block;
 	font-size: 1rem;
 	margin-top: -10px;
 }
-.homeicon{
-	margin-top: 50px;
-	display: block;
-	font-size: 3rem;
-	color:#ddd;
-}
+
 
 .wthree-field input {
     padding: 15px 0 10px 15px;
