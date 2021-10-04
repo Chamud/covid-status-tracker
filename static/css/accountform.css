@@ -330,11 +330,14 @@ a, a:visited, a:hover, a:active {
 
 @media screen and (max-width: 384px) {
     .content-bottom {
-		padding-bottom: 2em;
+		padding-bottom: 3em;
 		margin-bottom: 50px;
+		padding-top: 0;
 	}
 	.content-w3ls{
 		padding-top: 0;
+		margin-top: -25px;
+		margin-bottom: 20px;
 	}
 
 }
