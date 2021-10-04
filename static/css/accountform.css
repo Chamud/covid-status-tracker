@@ -100,6 +100,9 @@ form .field-group .wthree-field {
 	transform: scale(1.05);
 }
 
+.err{
+	color: #ba2127;
+}
 .home{
 	display: block;
 	font-size: 1rem;

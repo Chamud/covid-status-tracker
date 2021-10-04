@@ -21,7 +21,7 @@
 					<div class="field-group">
 						<span class="fa fa-lock" aria-hidden="true"></span>
 						<div class="wthree-field">
-							<input type="password" name="password" placeholder="Enter the password">
+							<input type="password" name="password" placeholder="Enter the password" required>
 						</div>
 					</div>
 					<div class="wthree-field">
@@ -29,9 +29,12 @@
 					</div>
 					
 				</form>
-				{% for message in messages %}
-					<p>{{ message }}</p>
-				{% endfor %}
+
+				<span class="text-center err" >
+					{% for message in messages %}
+						<p>{{ message }}</p>
+					{% endfor %}
+				</span>
 
 				<div class="login-navigation text-center">
 					<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p> 
