@@ -9,6 +9,8 @@ from pymongo import MongoClient
 
 from decouple import config
 
+from . import alg
+
 # Create your views here.
 from .forms import CreateUserForm
 
