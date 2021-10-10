@@ -5,17 +5,20 @@
 
 <h1>This is home of Covid Status Tracker</h1>
 
+{% for message in messages %}
+	<p>{{ message }}</p>
+{% endfor %}
+
 {% if user.is_anonymous %}
 	<p>Please <a href="{% url 'login' %}">login</a> to use all the features</p>
 {% else %}
 	<p> Hello, {{ request.user }}</p>
 {% endif %}
 
-
-{% for message in messages %}
-	<p>{{ message }}</p>
-{% endfor %}
-
 <img src="{% static 'images/home.png' %}">
+
+<script type="text/javascript">
+	window.onload = navbarselect("home")
+</script>
 
 {% endblock %}

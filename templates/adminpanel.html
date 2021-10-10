@@ -3,8 +3,7 @@
 
 {% block content %}
 
-<h1>This is the Symptom Tracker interface</h1>
-<img src="{% static 'images/tracker.png' %}">
+<h1>This is admin panel</h1>
 
 {% for message in messages %}
 	<p>{{ message }}</p>
@@ -12,6 +11,7 @@
 
 
 <script type="text/javascript">
-	window.onload = navbarselect("tracker")
+	window.onload = navbarselect("adm")
 </script>
+
 {% endblock %}

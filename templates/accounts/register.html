@@ -34,6 +34,7 @@
 						<div class="wthree-field">
 							{{form.password1}}
 						</div>
+						<span id="regtog" class="fa fa-eye" onclick='pwtoggle("regpw1", "regtog")'></span>
 					</div>
 					<span class="err" ><p>{{ form.username.password1.as_text }}</p></span>
 
@@ -42,6 +43,7 @@
 						<div class="wthree-field">
 							{{form.password2}}
 						</div>
+						<span id="regtog2" class="fa fa-eye" onclick='pwtoggle("regpw2", "regtog2")'></span>
 					</div>
 					<span class="err" ><p>{{ form.password2.errors.as_text }}</p></span>
 				
@@ -73,7 +75,9 @@
 	fields[1].placeholder='Enter the username'
 	fields[2].placeholder='Enter the email address'
 	fields[3].placeholder='Enter the password'
+	fields[3].id = 'regpw1'
 	fields[4].placeholder='Re-enter the password'
+	fields[4].id = 'regpw2'
 </script>
 
 {% endblock %}

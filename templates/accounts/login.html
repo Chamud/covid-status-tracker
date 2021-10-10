@@ -21,8 +21,9 @@
 				<div class="field-group">
 					<span class="fa fa-lock" aria-hidden="true"></span>
 					<div class="wthree-field">
-						<input type="password" name="password" placeholder="Enter the password" required>
+						<input id="logininput" type="password" name="password" placeholder="Enter the password" required>
 					</div>
+					<span id="logintog" class="fa fa-eye" onclick='pwtoggle("logininput", "logintog")'></span>
 				</div>
 				<div class="wthree-field">
 					<button type="submit" class="btn" id="login-button">Login</button>

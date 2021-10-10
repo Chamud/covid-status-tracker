@@ -55,6 +55,7 @@ def loginuser(request):
 
 def logoutuser(request):
 	logout(request)
+	messages.info(request, 'Successfully logged out.')
 	return redirect('home')
 
 
@@ -67,3 +68,17 @@ def tracker(request):
 	messages.info(request, 'Number of users = ' + str(n))
 	return render(request, 'symptomtracker/tracker.html')
 
+
+def admin_p(request):
+	if request.user.is_superuser:
+		return render(request, 'adminpanel.html')
+	else:
+		messages.info(request, 'Access denied!')
+		return redirect('home')
+
+def staff_p(request):
+	if request.user.is_staff:
+		return render(request, 'staffpanel.html')
+	else:
+		messages.info(request, 'Access denied!')
+		return redirect('home')
