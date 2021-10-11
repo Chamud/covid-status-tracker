@@ -82,6 +82,7 @@ def admin_p(request):
 							messages.info(request, "You can't remove your own privileges!")
 						else:
 							thisuser.is_staff = False
+							thisuser.is_superuser = False
 							thisuser.save()
 						break
 					else:
@@ -98,6 +99,7 @@ def admin_p(request):
 						break
 					else:
 						thisuser.is_superuser = True
+						thisuser.is_staff = True
 						thisuser.save()
 						break
 
