@@ -59,14 +59,17 @@ def logoutuser(request):
 	return redirect('home')
 
 
-@login_required(login_url='login')
 def tracker(request):
-	client = MongoClient(config('DB_CONNECTION'))
-	db = client.get_database('CST')
-	records = db.UserData
-	n = records.count_documents({})
-	messages.info(request, 'Number of users = ' + str(n))
-	return render(request, 'symptomtracker/tracker.html')
+	if request.user.is_authenticated:
+		client = MongoClient(config('DB_CONNECTION'))
+		db = client.get_database('CST')
+		records = db.UserData
+		n = records.count_documents({})
+		messages.info(request, 'Number of users = ' + str(n))
+		return render(request, 'symptomtracker/tracker.html')
+	else:
+		messages.info(request, 'Please login to use the symptom tracker')
+		return redirect('home')
 
 
 def admin_p(request):

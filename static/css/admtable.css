@@ -7,6 +7,28 @@
 	align-self: center;
 	display: inline-block;
 }
+#searchbtn-bt{
+	background-color: #0C1559;
+}
+#tabletop{
+	margin-bottom: 10px;
+	display: flex;   
+  justify-content: space-between;
+}
+#searchboxbtn{
+	display: flex;
+	margin-top: 5px; 
+}
+#searchbar{
+	margin-left: 4px;
+	margin-right: 4px;
+}
+.dropdown{
+	margin-top: 5.5px;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
 #topheading h1{
 	padding-left: 5px;
 	padding-bottom: 20px;
@@ -101,21 +123,24 @@ td, th{
 	margin: auto;
 	transform: translateX(0);
 	overflow: hidden;
-}
+	}
 #advadm span{
 	display: inline-block;
 	padding: 2px;
 	align-items: center;
 	overflow: hidden;
-}
-#admbtn{
+	}
+	#admbtn{
 	min-width: 216px;
 	margin-left: 50%;
 	transform: translateX(-50%);
+	}
 }
+
 @media only screen and (max-width: 900px) and (min-width: 580px){
 	#admdec{
 		margin-left: 50%;
 		transform: translateX(-50%);
 	}
 }
+
