@@ -9,7 +9,7 @@
 	border-radius: 10px;
 }
 .navbox{
-	background-color: rgba(0,0,0,.4);
+	background-color: rgba(0,0,0,.5);
 	box-shadow: 0 .5rem .5rem rgba(255,255,255,.15);
 }
 .navbar-nav .nav-link{

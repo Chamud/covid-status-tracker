@@ -2,13 +2,48 @@
 {% load static %}
 
 {% block content %}
-
-<h1>This is admin panel</h1>
-
+<div id="topheading">
+	<h1>Hello {{ request.user.first_name }}! Welcome to the admin panel.</h1>
+</div>
 {% for message in messages %}
-	<p>{{ message }}</p>
+	<div class="alert alert-danger"><p>{{ message }}</p></div>
 {% endfor %}
 
+<div class="tablecontainer">
+	<div class="tablewrap">
+		<form method="post" action="">{% csrf_token %}
+			<table class="table table-dark table-striped tableadm">
+				<thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">Username</th>
+				      <th scope="col">Email</th>
+				      <th scope="col">Staff User Status</th>
+				      <th scope="col">Admin User Status</th>
+				    </tr>
+			  	</thead>
+			  	<tbody>
+			  	{% for user in users %}
+				  	<tr class="trhover">
+				      <th scope="row">{{ forloop.counter }}</th>
+				      <td>{{ user.username }}</td>
+				      <td>{{ user.email }}</td>
+				      
+				      <td>{{ user.is_staff}} {% if user.is_staff %}<button name="{{ user.username }}"  type="submit" class="redbt">Remove from staff</button>{% else %}<button name="{{ user.username }}"  type="submit" class="bluebt">Make staff user</button>{% endif %} </td>
+				      
+				      <td>{{ user.is_superuser}}{% if user.is_superuser %}<button name="{{ user.username }}adm" type="submit" class="redbt">Remove from admin</button>{% else %}<button name="{{ user.username }}adm" type="submit" class="bluebt">Make admin user</button>{% endif %}</td>
+				    </tr>
+			 	{% endfor %}
+			 	</tbody>
+			</table>
+		</form>
+	</div>
+</div>
+
+<div id="advadm">
+	<span><a href="admin"><button class="btn btn-danger">Advanced Admin Options</button></a> </span>
+	<span><p>Please do not access if you are not familiar with Django Administration Panel!</p></span>
+</div>
 
 <script type="text/javascript">
 	window.onload = navbarselect("adm")

@@ -6,13 +6,13 @@
 <h1>This is home of Covid Status Tracker</h1>
 
 {% for message in messages %}
-	<p>{{ message }}</p>
+	<div class="alert alert-primary"><p>{{ message }}</p></div>
 {% endfor %}
 
 {% if user.is_anonymous %}
 	<p>Please <a href="{% url 'login' %}">login</a> to use all the features</p>
 {% else %}
-	<p> Hello, {{ request.user }}</p>
+	<p> Hello, {{ request.user.get_full_name }}</p>
 {% endif %}
 
 <img src="{% static 'images/home.png' %}">

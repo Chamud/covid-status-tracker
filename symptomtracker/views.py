@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import  UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -41,7 +42,7 @@ def loginuser(request):
 	else:
 		if request.method == 'POST':
 			username = request.POST.get('username')
-			password =request.POST.get('password')
+			password = request.POST.get('password')
 
 			user = authenticate(request, username=username, password=password)
 
@@ -50,7 +51,6 @@ def loginuser(request):
 				return redirect('home')
 			else:
 				messages.info(request, 'Username OR password is incorrect')
-
 	return render(request, 'accounts/login.html')
 
 def logoutuser(request):
@@ -71,7 +71,40 @@ def tracker(request):
 
 def admin_p(request):
 	if request.user.is_superuser:
-		return render(request, 'adminpanel.html')
+		User = get_user_model()
+		users = User.objects.all()
+
+		if request.method == 'POST':
+			for thisuser in users:
+				if thisuser.username in request.POST:
+					if thisuser.is_staff:
+						if (request.user == thisuser):
+							messages.info(request, "You can't remove your own privileges!")
+						else:
+							thisuser.is_staff = False
+							thisuser.save()
+						break
+					else:
+						thisuser.is_staff = True
+						thisuser.save()
+						break
+				elif thisuser.username+"adm" in request.POST:
+					if thisuser.is_superuser:
+						if (request.user == thisuser):
+							messages.info(request, "You can't remove your own privileges!")
+						else:
+							thisuser.is_superuser = False
+							thisuser.save()
+						break
+					else:
+						thisuser.is_superuser = True
+						thisuser.save()
+						break
+
+
+		newusers = User.objects.all()
+		context={'users': newusers}
+		return render(request, 'adminpanel.html', context)
 	else:
 		messages.info(request, 'Access denied!')
 		return redirect('home')
