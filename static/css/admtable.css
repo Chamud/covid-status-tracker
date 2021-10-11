@@ -1,6 +1,12 @@
 .tableadm{
 	white-space: nowrap;
 }
+#admintable tr td{
+	border-right-width: 3px;
+}
+#admintable tr th{
+	border-width: 2px;
+}
 .alert{
 	margin-left: 50%;
 	transform: translateX(-50%);
@@ -30,7 +36,8 @@
 }
 
 #topheading h1{
-	padding-left: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
 	padding-bottom: 20px;
 	color: #040273;
 }
