@@ -1,3 +1,6 @@
+body{
+
+}
 .tableadm{
 	white-space: nowrap;
 }
@@ -33,13 +36,6 @@
 	margin-top: 5.5px;
 	margin-left: 4px;
 	margin-right: 4px;
-}
-
-#topheading h1{
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-bottom: 20px;
-	color: #040273;
 }
 
 .tablewrap{

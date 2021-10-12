@@ -5,6 +5,8 @@
 	<title>Covid Status Tracker</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
+	<!-- jquery 1.11 -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>  
 
 	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 	
@@ -14,11 +16,23 @@
 	<link rel="stylesheet" href="{% static '/css/navbarAddons.css' %}" />
 	<script type="text/javascript"  src="{% static '/js/navbarAddon.js' %}"></script>
 
+	<!-- Date time picker-->
+	<script type="text/javascript"  src="{% static '/js/datetimepicker.js' %}"></script>
+
 	<!--footer css-->
 	<link rel="stylesheet" href="{% static '/css/footer.css' %}" type="text/css" media="all">
+
 	<!--admin panel-->
 	<link rel="stylesheet" href="{% static '/css/admtable.css' %}" type="text/css" media="all">
 	<script type="text/javascript"  src="{% static '/js/adminsearch.js' %}"></script>
+
+	<!--Forms in status tracker: data collect, new profile, profile-->
+	<link rel="stylesheet" href="{% static '/css/stforms.css' %}" type="text/css" media="all">
+
+	<!-- Bootstrap Date-Picker Plugin -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
 
 </head>
 <body>
@@ -34,8 +48,8 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item navbox"><a id="navhome" class="nav-link"  aria-current="page" href="{% url 'home' %}">Home</a></li>
-				<li class="nav-item navbox"><a id="navtracker" class="nav-link" href="{% url 'tracker' %}">Symptom Tracker</a></li>
-				<li class="nav-item navbox"><a id="navmap" class="nav-link" href="{% url 'map' %}">Covid Map</a></li>
+				<li class="nav-item navbox"><a id="navtracker" class="nav-link" aria-current="page" href="{% url 'tracker' %}">Symptom Tracker</a></li>
+				<li class="nav-item navbox"><a id="navmap" class="nav-link" aria-current="page" href="{% url 'map' %}">Covid Map</a></li>
 
 				{% if user.is_staff %}
 					<li class="nav-item navbox"><a id="navstf" class="nav-link"  aria-current="page" href="{% url 'staff_panel' %}">Staff Panel</a></li>
@@ -45,9 +59,10 @@
 				{% endif %}
 
 				{% if user.is_anonymous %}
-					<li class="nav-item navbox"><a class="nav-link"  href="{% url 'login' %}">Login</a></li>
+					<li class="nav-item navbox"><a class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a></li>
 				{% else %}
-					<li class="nav-item navbox"><a class="nav-link text-danger"  href="{% url 'logout' %}">Logout</a></li>
+					<li class="nav-item navbox"><a id="navprof" class="nav-link" aria-current="page" href="{% url 'profile' %}">Profile</a></li>
+					<li class="nav-item navbox"><a class="nav-link text-danger" aria-current="page" href="{% url 'logout' %}">Logout</a></li>
 				{% endif %}
 			</ul>
 		</div>

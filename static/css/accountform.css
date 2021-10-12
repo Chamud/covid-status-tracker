@@ -1,3 +1,10 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #ddd !important;
+}
 
 body{
 	background: #388EE9;
@@ -6,8 +13,8 @@ body{
 	background: -moz-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
 	background: -o-linear-gradient(top left, #388EE9 0%, #09EBEE 100%);
 	background: linear-gradient(to bottom right, #388EE9 0%, #09EBEE 100%);
-
 }
+
 .iceblock {
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -92,7 +99,6 @@ form .field-group span {
 }
 form .field-group .wthree-field {
     flex: 4 50%;
-    -webkit-box-flex:4 50%;     /* OLD - iOS 6-, Safari 3.1-6 */
     -moz-box-flex: 4 50%;        /* OLD - Firefox 19- */
     -webkit-flex: 4 50%;          /* Chrome */
     -ms-flex: 4 50%;             /* IE 10 */

@@ -13,4 +13,7 @@ function navbarselect(item) {
 	else if (item == "adm"){
 		document.getElementById("navadm").classList = "nav-link active shadow"
 	}
+	else if (item == "prof"){
+		document.getElementById("navprof").classList = "nav-link active shadow"
+	}
 }

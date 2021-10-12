@@ -1,0 +1,29 @@
+.st_forms_wrapper{
+  margin: auto;
+  width: 85%;
+}
+.form-group{
+  margin-bottom: 15px;
+}
+@media screen and (max-width: 560px) {
+  .form-group{
+    margin-bottom: 5px;
+  }
+}
+
+.maxsize{
+  width: 250px !important;
+}
+
+
+#topheading{
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 20px;
+}
+#topheading h1{
+  color: #040273;
+}
+#topheading p{
+  color: #000293;
+}

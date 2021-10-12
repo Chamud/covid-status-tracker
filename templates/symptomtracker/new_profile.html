@@ -1,0 +1,144 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div id="topheading">
+	<span><h1>Personal Details</h1></span>
+	<p>Please complete the following form inorder ro complete the registration process.</p>
+</div>
+
+
+{% for message in messages %}
+	<div class="alert alert-primary"><p>{{ message }}</p></div>
+{% endfor %}
+
+<div class="st_forms_wrapper">
+	<form method="POST">
+	{% csrf_token %}
+		<div class="form-row row">
+			<div class="form-group col-md-6">
+			    <label for="first-name" class="col-sm-2 col-form-label">First Name</label>
+			    
+			    	<input type="text" class="form-control" id="first-name" name="firstname" placeholder="First Name" required>
+			    
+			</div>
+			<div class="form-group col-md-6">
+			    <label for="last-name" class="col-sm-2 col-form-label">Last Name</label>
+			    
+			    	<input type="text" class="form-control" id="last-name" name="lastname" placeholder="Last Name" required>
+			    
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="IDvalue" class="col-sm-2 col-form-label">Identity Number</label>
+				<div class="col">
+		    		<input type="text" class="form-control" id="IDvalue" name="IDvalue" placeholder="ID number">
+		    	</div>
+			    <div class="col-md-2">
+			    	<select class="custom-select mr-sm-2" name="idtype" id="iIDtypeCustomSelect">
+			        	<option selected>Other</option>
+			        	<option value="NIC">NIC</option>
+			        	<option value="Passport">Passport</option>
+			    	</select>
+			    </div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="homeadd" class="col-sm-2 col-form-label">Address</label>
+		    <div class="col-sm-10">
+		    	<input type="text" class="form-control" id="homeadd" name="homeadd" placeholder="Home Address" required>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="dob" class="col-sm-2 col-form-label">Date-of-Birth</label>
+		    <div class="col-sm-10">
+		    	<input type="text" class="form-control" id="dob" name="dob" placeholder="DD/MM/YYYY" required>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="phone" class="col-sm-2 col-form-label">Contact Number</label>
+		    <div class="col-sm-10">
+		    	<input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone number" required>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+			<label for="vaccinated" class="col-sm-4 col-form-label">Vaccinated?</label>
+		    <div class="col-sm-6">
+		    	<select class="custom-select" name="vaccinated" id="vaccinated">
+		        	<option selected>No</option>
+		        	<option value="Dose1">Yes - Dose 1</option>
+		        	<option value="Dose2">Yes - Dose 2</option>
+		    	</select>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+			<label for="covidstatus" class="col-sm-4 col-form-label">Have you been affected by Covid?</label>
+		    <div class="col-sm-6">
+		    	<select class="custom-select maxsize" name="covidstatus" id="covidstatus">
+		        	<option selected>No</option>
+		        	<option value="Suspect">Not sure (I suspect I may have been affected)</option>
+		        	<option value="Patient">Yes (I am  a covid patient)</option>
+		        	<option value="Recovered">Yes (But I am completely recovered now)</option>
+		    	</select>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+			<div class="alert alert-primary"><p class="text-center">If you have any major health conditions, please state them below.</p><p class="text-center">Leave blank if none.</p></div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="carddis" class="col-sm-2 col-form-label">Cardiovascular Disease</label>
+		    <div class="col-sm-10">
+		    	<textarea type="text" class="form-control" id="carddis" name="carddis" placeholder="Description"></textarea>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="diabdis" class="col-sm-2 col-form-label">Diabetes</label>
+		    <div class="col-sm-10">
+		    	<textarea type="text" class="form-control" id="diabdis" name="diabdis" placeholder="Description"></textarea>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="crddis" class="col-sm-2 col-form-label">Chronic Respiratory Disease</label>
+		    <div class="col-sm-10">
+		    	<textarea type="text" class="form-control" id="crddis" name="crddis" placeholder="Description"></textarea>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="cancdis" class="col-sm-2 col-form-label">Cancer</label>
+		    <div class="col-sm-10">
+		    	<textarea type="text" class="form-control" id="cancdis" name="cancdis" placeholder="Description"></textarea>
+		    </div>
+		</div>
+
+		<div class="form-group row">
+		    <label for="othdis" class="col-sm-2 col-form-label">Other Diseases</label>
+		    <div class="col-sm-10">
+		    	<textarea type="text" class="form-control" id="othdis" name="othdis" placeholder="Description"></textarea>
+		    </div>
+		</div>
+
+
+		<div class="form-group row">
+	  	    <div class="col-auto my-1">
+	      		<button type="submit" class="btn btn-primary">Submit</button>
+	      	</div>
+	    </div>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+	window.onload = navbarselect("prof")
+</script>
+{% endblock %}

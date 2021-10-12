@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>This is the User Profile</h1>
+
+{% for message in messages %}
+	<p>{{ message }}</p>
+{% endfor %}
+
+
+<script type="text/javascript">
+	window.onload = navbarselect("prof")
+</script>
+{% endblock %}
