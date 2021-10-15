@@ -11,7 +11,7 @@ from decouple import config
 from . import alg
 from . import mongoform
 
-
+ 
 def home(request):
 	return render(request, 'home.html')
 
@@ -30,7 +30,7 @@ def register(request):
 				return redirect('home')
 			messages.info(request, 'An account was created for ' + new_user.username)
 			login(request, new_user)
-			return redirect('new_profile')
+			return redirect('edit_profile')
 		messages.info(request, 'Please check th errors')
 	context = {'form':form}
 	return render(request, 'accounts/register.html', context)
@@ -55,11 +55,8 @@ def logoutuser(request):
 	messages.info(request, 'Successfully logged out.')
 	return redirect('home')
 
-def new_profile(request):
+def edit_profile(request):
 	if request.user.is_authenticated:
-		if (request.user.first_name != ""):
-			messages.info(request, 'You have already completed registration')
-			return redirect('home')
 		if request.method == 'POST':
 			newdata = []
 			newdata.append(request.POST.get('firstname'))
@@ -76,9 +73,12 @@ def new_profile(request):
 			newdata.append(request.POST.get('crddis'))
 			newdata.append(request.POST.get('cancdis'))
 			newdata.append(request.POST.get('othdis'))
-			db_errors = mongoform.reg_new_user(request.user.id, newdata)
+			db_errors = mongoform.edit_user(request.user.id, newdata)
 			if(db_errors==0):
-				messages.info(request, 'Registration process is complete')
+				if(request.user.first_name == ""):
+					messages.info(request, 'Registration process is complete')
+				else:
+					messages.info(request, 'Successfully updated the details')
 				this_user = request.user
 				this_user.first_name = newdata[0]
 				this_user.last_name = newdata[1]
@@ -86,22 +86,34 @@ def new_profile(request):
 			else:
 				messages.info(request, "Database Error: Couldn't save data to the database")
 			return redirect('home')
-		return render(request, 'symptomtracker/new_profile.html')
+		if(request.user.first_name == ""):
+			return render(request, 'symptomtracker/edit_profile.html')
+		edit_data = mongoform.get_profile(request.user.id) 
+		if (edit_data == 0):
+			messages.info(request,"Database Error: Failed to retrive data from database.")
+			return redirect('home')
+		context = {'editdata' : edit_data}
+		return render(request, 'symptomtracker/edit_profile.html', context)
 	messages.info(request, 'Please login to access!')
 	return redirect('home')
 
 def profile(request):
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
-			return redirect('new_profile')
-		return render(request, 'symptomtracker/profile.html')
+			return redirect('edit_profile')
+		edit_data = mongoform.get_profile(request.user.id) 
+		if (edit_data == 0):
+			messages.info(request,"Database Error: Failed to retrive data from database.")
+			return redirect('home')
+		context = {'editdata' : edit_data}
+		return render(request, 'symptomtracker/profile.html', context)
 	messages.info(request, 'Please login to access the profile')
 	return redirect('home')
 
 def tracker(request):
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
-			return redirect('new_profile')
+			return redirect('edit_profile')
 		return render(request, 'symptomtracker/tracker.html')
 	messages.info(request, 'Please login to use the symptom tracker')
 	return redirect('home')

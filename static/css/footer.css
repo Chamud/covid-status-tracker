@@ -21,6 +21,9 @@
 #footer a:active, #footer a:hover {
 	color: #ffffff;
 }
+.tabular{
+	overflow: hidden;
+}
 
 #footer .copyright {
 	font-size: 0.9em;

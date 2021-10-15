@@ -1,5 +1,5 @@
-body{
-
+.dropdown-menu{
+	overflow-y: visible;
 }
 .tableadm{
 	white-space: nowrap;

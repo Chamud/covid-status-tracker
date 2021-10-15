@@ -2,14 +2,116 @@
 {% load static %}
 
 {% block content %}
+<div id="profilePageWrapper">
+	<div class="d-flex justify-content-center">
+		<div class="card text-center">
+		  <h1 class="card-header" id="profileName">{{ editdata.0 }} {{ editdata.1 }}</h1>
+		</div>
+	</div>
 
-<h1>This is the User Profile</h1>
-
-{% for message in messages %}
-	<p>{{ message }}</p>
-{% endfor %}
+	{% for message in messages %}
+		<div class="alert alert-primary"><p>{{ message }}</p></div>
+	{% endfor %}
 
 
+
+	<div id="accountDetails" class="d-flex justify-content-center">
+		<div class="card" id="accdetailsCard">
+		  <div class="card-header text-center">
+		    <h4>Account Details</h4>
+		  </div>
+		  <ul class="list-group list-group-flush">
+		    <li class="list-group-item"><div class="row bg-white"><div class="col-sm-3">Account ID</div><div class="text-primary col">{{ request.user.id }}</div></div></li>
+		    <li class="list-group-item"><div class="row bg-white"><div class="col-sm-3">Username</div><div class="text-primary col">{{ request.user.username }}</div></div></li>
+		    <li class="list-group-item"><div class="row bg-white"><div class="col-sm-3">Email</div><div class="text-primary col">{{ request.user.email }}</div></div></li>
+		  </ul>
+		</div>
+	</div>
+
+	<div id="personalDetails" class="d-flex justify-content-center">
+		<div class="card" id="personaldetailsCard">
+		  <div class="card-header text-center">
+		    <h4>Personal Details</h4>
+		  </div>
+		  <ul class="list-group list-group-flush">
+		    <li class="list-group-item"><div class="row text-secondary bg-white"><div class="col-sm-5">ID Number</div><div class="text-dark col">{{editdata.2}}&nbsp{% if editdata.3 == "NIC"%}(NIC){% elif editdata.3 == "Passport"%}(Passport){% endif %}</div></div></li>
+		    <li class="list-group-item"><div class="row text-secondary bg-white"><div class="col-sm-5">Address</div><div class="text-dark col">{{editdata.4}}</div></div></li>
+		    <li class="list-group-item"><div class="row text-secondary bg-white"><div class="col-sm-5">Date of Birth</div><div class="text-dark col">{{editdata.5}}</div></div></li>
+		    <li class="list-group-item"><div class="row text-secondary bg-white"><div class="col-sm-5">Contact Number</div><div class="text-dark col">{{editdata.6}}</div></div></li>
+		    <li class="list-group-item"><div class="row text-secondary bg-white"><div class="col-sm-5">Vaccinated?</div><div class="text-dark col">{{editdata.7}}</div></div></li>
+		    <li class="list-group-item"><div class="row text-secondary bg-white"><div class="col-sm-5">Corona-patient Status</div><div class="text-dark col">{{editdata.8}}</div></div></li>
+		  </ul>
+		</div>
+	</div>
+
+
+
+	{% if editdata.9 != "" or editdata.10 != "" or editdata.11 != "" or editdata.12 != "" or editdata.13 != "" %}
+	<hr class="profilehr">
+	<div id="HCcards" class="d-flex justify-content-center row">
+		{% if editdata.9 != "" %}
+			<div class="col-md-3">
+				<div class="card border-info mb-3 mincardwidth">
+				  <div class="card-header"><h5 class="card-title">Cardiovascular Disease</h5></div>
+				  <div class="card-body text-secondary">
+				    <p class="card-text">{{ editdata.9 }}</p>
+				  </div>
+				</div>
+			</div>
+		{% endif %}
+		{% if editdata.10 != "" %}
+			<div class="col-md-3">
+				<div class="card border-info mb-3 mincardwidth">
+				  <div class="card-header"><h5 class="card-title">Diabetes</h5></div>
+				  <div class="card-body text-secondary">
+				    <p class="card-text">{{ editdata.10 }}</p>
+				  </div>
+				</div>
+			</div>
+		{% endif %}
+		{% if editdata.11 != "" %}
+			<div class="col-md-3">
+				<div class="card border-info mb-3 mincardwidth">
+				  <div class="card-header"><h5 class="card-title">Chronic Respiratory Disease</h5></div>
+				  <div class="card-body text-secondary">
+				    <p class="card-text">{{ editdata.11 }}</p>
+				  </div>
+				</div>
+			</div>
+		{% endif %}
+		{% if editdata.12 != "" %}
+			<div class="col-md-3">
+				<div class="card border-info mb-3 mincardwidth">
+				  <div class="card-header"><h5 class="card-title">Cancer</h5></div>
+				  <div class="card-body text-secondary">
+				    <p class="card-text">{{ editdata.12 }}</p>
+				  </div>
+				</div>
+			</div>
+		{% endif %}
+		{% if editdata.13 != "" %}
+			<div class="col-md-3">
+				<div class="card border-info mb-3 mincardwidth">
+				  <div class="card-header"><h5 class="card-title">Special Conditions</h5></div>
+				  <div class="card-body text-secondary">
+				    <p class="card-text">{{ editdata.13 }}</p>
+				  </div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	{% endif %}
+
+	<hr class="profilehr">
+	<div id="profileButtons" class="d-flex justify-content-center row">
+		<div class="col-auto">
+			<a href="{% url 'edit_profile' %}" class="btn btn-danger btn-lg" role="button" aria-disabled="true">Edit Profile</a>
+		</div>
+		<div class="col-auto">
+			<a href="{% url 'reset_password' %}" class="btn btn-danger btn-lg"> Reset Password</a>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 	window.onload = navbarselect("prof")
 </script>

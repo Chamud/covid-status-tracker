@@ -1,9 +1,11 @@
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active  {
+input:-webkit-autofill:active,
+input:-webkit-autofill::first-line  {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: #ddd !important;
+    font-size: 17px;
+    -webkit-text-fill-color: #ffffff !important;
 }
 
 body{
@@ -65,7 +67,7 @@ body{
     z-index: 1;
 }
 form .field-group {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(100, 100, 100, 0.1);
     display: flex;
     display: flex;
     display: -webkit-box;
@@ -155,7 +157,7 @@ form .field-group .wthree-field {
     padding: 15px 0 10px 15px;
     font-size: 17px;
     font-weight: 300;
-	color:#ddd;
+	color:#FFFFFF;
     letter-spacing: 1px;
     border: none;
     background: transparent;

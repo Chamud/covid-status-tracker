@@ -1,0 +1,15 @@
+{% if request.user.first_name != "" %} 
+	<script type="text/javascript">
+		window.onload = addValues()
+		function addValues(){
+			document.forms[0].fid_1.value = {{ editdata[0] }};
+		}
+	</script>
+{% endif %}\
+
+
+<ul class="list-group list-group-flush">
+	    <li class="list-group-item d-flex">Account ID :<ul class="list-group list-group-flush"><li class="list-group-item">{{ request.user.id }}</li></ul></p></li>
+	    <li class="list-group-item d-flex">Username   :<ul class="list-group list-group-flush"><li>{{ request.user.username }}</li></ul></p></li>
+	    <li class="list-group-item d-flex">Email      :<ul class="list-group list-group-flush"><li>{{ request.user.email }}</li></ul></li>
+	  </ul>
