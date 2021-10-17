@@ -1,0 +1,174 @@
+:root{
+--pseudo-coldSlider: 1%;
+--pseudo-JointSlider:  1%;
+--pseudo-weakSlider:  1%;
+--pseudo-abdSlider:  1%;
+--pseudo-appSlider:  1%;
+--pseudo-stSlider:  1%;
+--pseudo-hdSlider:  1%;
+--pseudo-dyspSlider:  1%;
+--pseudo-drycSlider:  1%;
+--pseudo-DiarSlider
+--pseudo-vomitSlider
+--pseudo-NausSlider
+}
+
+#dailyFormWrapper{
+	max-width: 84%;
+	margin-left: 8%;
+	margin-right: 8%;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+.form-range:before{
+	content: " ";
+	position: absolute;
+	display: inline-block;
+	background-color: blue;
+	height: 6px;
+	font-size: 5px;
+	transform: translateY(9px);
+}
+#ColdSlider:before{
+	width: var(--pseudo-coldSlider);
+}
+#JointPainSlider:before{
+	width: var(--pseudo-JointSlider);
+}
+#WeakSlider:before{
+	width: var(--pseudo-weakSlider);
+}
+#AbdPainSlider:before{
+	width: var(--pseudo-abdSlider);
+}
+#AppSlider:before{
+	width: var(--pseudo-appSlider);
+}
+#ThroatSlider:before{
+	width: var(--pseudo-stSlider);
+}
+#headacheSlider:before{
+	width: var(--pseudo-hdSlider);
+}
+#DyspSlider:before{
+	width: var(--pseudo-dyspSlider);
+}
+#drychSlider:before{
+	width: var(--pseudo-drycSlider);
+}
+#DiarSlider:before{
+	width: var(--pseudo-DiarSlider);
+}
+#vomitSlider:before{
+	width: var(--pseudo-vomitSlider);
+}
+#NausSlider:before{
+	width: var(--pseudo-NausSlider);
+}
+
+.numberset{
+	margin: 0;
+  	width:100%;
+  	font-size:0;
+}
+.numberTile{
+  	display: inline-block;
+  	margin-top: -25px;
+}
+.btn-none{
+	transform: scale(0.9);
+	font-size: 13px;
+}
+.btn-mild, .btn-mild:hover{
+	color: green;
+}
+.btn-painful, .btn-painful:hover{
+	color: #ffc107;
+}
+.btn-severe, .btn-severe:hover{
+	color: red;
+}
+.numberTile .btn{
+	width: 99.5%;
+	border-radius: 1rem;
+	background-color: #eee;
+	cursor: default;
+}
+
+.numberTileBefitem:before{
+	position: relative;
+	margin-top: 0;
+	top: 52px;
+	font-size: 15px;
+	content: "|";
+}
+
+.wd-t-1{
+	width: 10%;
+}
+.wd-t-2{
+	width: 20%;
+}
+.wd-t-3{
+	width: 30%;
+}
+.wd-t-4{
+	width: 40%;
+}
+.wd-t-5{
+	width: 50%;
+}
+.wd-t-9{
+	width: 70%;
+
+}
+
+.TopHeadings{
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 20px;
+  color: #040273;
+  text-align: center;
+}
+#bTempInput{
+	width: 150px !important;
+}
+#clocksubdiv{
+	float:right;
+	padding: 8px;
+	margin: 3px;
+	background-color: #ddd;
+	border-radius: 6px;
+}
+#clockDiv{
+	padding-right: 0;
+}
+@media screen and (max-width: 750px) {
+	#clocksubdiv{
+		float: left;
+	}
+	#dailyFormWrapper{
+		margin-top: 0px;
+	}
+	.sympCard{
+		border-radius: 13px !important;
+	}
+	#BodyTemp{
+		transform: translateX(4%);
+		max-width: 90%;
+	}
+}
+
+.sympCard{
+	border: 2px solid black;
+	border-color: #ddd;
+	padding: 2%;
+	margin-bottom: 10px;
+	border-radius: 30px;
+}
+#BodyTemp{
+	margin-left: 1%;
+	margin-right: -1%;
+	border-radius: 20px;
+	padding-bottom: 15px !important;
+}

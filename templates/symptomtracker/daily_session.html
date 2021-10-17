@@ -1,0 +1,348 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="TopHeadings">
+	<h1>Enter Your Daily Symptom Data</h1>
+</div>
+
+{% for message in messages %}
+	<div class="alert alert-primary"><p>{{ message }}</p></div>
+{% endfor %}
+
+<div id="dailyFormWrapper">
+	<form method="POST">
+		{% csrf_token %}
+
+		<div class="row">
+			<div id="BodyTemp" class="col-md-9 order-2 order-md-1 row sympCard">
+				<div class="col-md-3">
+					<label for="bTempInput" class="form-label">Temperature in °C</label>
+				</div>
+				<div class="col-md-2">
+					<input type="number" id="bTempInput" class="form-control" name="quantity" min="35" max="40" step=".01" onkeyup="imposeMinMax(this)"> 
+				</div>
+			</div>
+
+			<div id="clockDiv" class="col-md-3 order-1 order-md-2">
+				<div id="clocksubdiv">
+					<span id="clock"></span>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="HeadacheSymptom" class="sympCard">
+			<label for="headacheSlider" class="form-label">Headache</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="headMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-warning btn-painful btn-sm" id="headPainful">Painful</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="headSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="headacheSlider" name="headacheSlider" value="0" min="0" max="10" step="0.001" oninput='threeSlider("--pseudo-hdSlider", this.value,"headMild","headPainful","headSevere")'>
+			</div>
+		</div>
+
+		<div id="JointPainSymptom" class="sympCard">
+			<label for="JointPainSlider" class="form-label">Pain in Joints</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="JointMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-warning btn-painful btn-sm" id="JointPainful">Painful</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="JointSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="JointPainSlider" name="JointPainSlider" value="0" min="0" max="10" step="0.001" oninput='threeSlider("--pseudo-JointSlider", this.value,"JointMild","JointPainful","JointSevere")'>
+			</div>
+		</div>
+
+		
+		<div id="AbdPainSymptom" class="sympCard">
+			<label for="AbdPainSlider" class="form-label">Abdominal Pain</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="AbdMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-warning btn-painful btn-sm" id="AbdPainful">Painful</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="AbdSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="AbdPainSlider" name="AbdPainSlider" value="0" min="0" max="10" step="0.001" oninput='threeSlider("--pseudo-abdSlider", this.value,"AbdMild","AbdPainful","AbdSevere")'>
+			</div>
+		</div>
+
+		<div id="SoreThroatSymptom" class="sympCard">
+			<label for="ThroatSlider" class="form-label">Sore Throat</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="STMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-warning btn-painful btn-sm" id="STPainful">Painful</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="STSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="ThroatSlider" name="ThroatSlider" value="0" min="0" max="10" step="0.001" oninput='threeSlider("--pseudo-stSlider", this.value,"STMild","STPainful","STSevere")'>
+			</div>
+		</div>
+
+		<div id="DryCoughSymptom" class="sympCard">
+			<label for="drychSlider" class="form-label">Dry Cough</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="drycMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-warning btn-painful btn-sm" id="drycPainful">Painful</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="drycSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="drychSlider" name="drychSlider" value="0" min="0" max="10" step="0.001" oninput='threeSlider("--pseudo-drycSlider", this.value,"drycMild","drycPainful","drycSevere")'>
+			</div>
+		</div>
+
+		<div id="DyspneaSymptom" class="sympCard">
+			<label for="DyspSlider" class="form-label">Dyspnea (Difficulty in breathing)</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="dyspMild">Occasional</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-warning btn-painful btn-sm" id="dyspPainful">Often</label>
+					</div>
+
+					<div class="numberTile wd-t-3 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="dyspSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="DyspSlider" name="DyspSlider" value="0" min="0" max="10" step="0.001" oninput='threeSlider("--pseudo-dyspSlider", this.value,"dyspMild","dyspPainful","dyspSevere")'>
+			</div>
+		</div>
+
+		<div id="ColdSymptom" class="sympCard">
+			<label for="ColdSlider" class="form-label">Cold</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-5 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="ColdMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-4 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="ColdSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="ColdSlider" name="ColdSlider" value="0" min="0" max="10" step="0.001" oninput='twoSlider("--pseudo-coldSlider", this.value,"ColdMild","ColdSevere")'>
+			</div>
+		</div>
+
+		<div id="WeakSymptom" class="sympCard">
+			<label for="WeakSlider" class="form-label">Feeling Week</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-5 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="WeakMild">Occasional</label>
+					</div>
+
+					<div class="numberTile wd-t-4 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="WeakSevere">Often</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="WeakSlider" name="WeakSlider" value="0" min="0" max="10" step="0.001" oninput='twoSlider("--pseudo-weakSlider", this.value,"WeakMild","WeakSevere")'>
+			</div>
+		</div>
+
+		<div id="AppSymptom" class="sympCard">
+			<label for="AppSlider" class="form-label">Loss of Appetite</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-5 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="AppMild">Occasional</label>
+					</div>
+
+					<div class="numberTile wd-t-4 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="AppSevere">Always</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="AppSlider" name="AppSlider" value="0" min="0" max="10" step="0.001" oninput='twoSlider("--pseudo-appSlider", this.value,"AppMild","AppSevere")'>
+			</div>
+		</div>
+
+
+		<div id="NausSymptom" class="sympCard">
+			<label for="NausSlider" class="form-label">Nausea (Sensation of the urge to vomit)</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-5 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="NsMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-4 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="NsSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="NausSlider" name="NausSlider" value="0" min="0" max="10" step="0.001" oninput='twoSlider("--pseudo-NausSlider", this.value,"NsMild","NsSevere")'>
+			</div>
+		</div>
+
+		<div id="VomitSymptom" class="sympCard">
+			<label for="vomitSlider" class="form-label">Cold</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-5 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="VomitMild">Occasional</label>
+					</div>
+
+					<div class="numberTile wd-t-4 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="VomitSevere">Often</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="vomitSlider" name="vomitSlider" value="0" min="0" max="10" step="0.001" oninput='twoSlider("--pseudo-vomitSlider", this.value,"VomitMild","VomitSevere")'>
+			</div>
+		</div>
+
+		<div id="DiarSymptom" class="sympCard">
+			<label for="DiarSlider" class="form-label">Diarrhea</label>
+			<div>
+				<div class="numberset">
+
+					<div class="numberTile wd-t-1">
+						<label class="btn btn-sm btn-none">No</label>
+					</div>
+
+					<div class="numberTile wd-t-5 numberTileBefitem">
+						<label class="btn btn-outline-success btn-mild btn-sm" id="diarMild">Mild</label>
+					</div>
+
+					<div class="numberTile wd-t-4 numberTileBefitem">
+						<label class="btn btn-outline-danger btn-severe btn-sm" id="diarSevere">Severe</label>
+					</div>
+
+				</div>
+				<input type="range" class="form-range" id="DiarSlider" name="DiarSlider" value="0" min="0" max="10" step="0.001" oninput='twoSlider("--pseudo-DiarSlider", this.value,"diarMild","diarSevere")'>
+			</div>
+		</div>
+				
+
+
+		<input type="submit" class="btn btn-primary">
+
+
+	</form>
+</div>
+
+<script type="text/javascript">
+	window.onload = navbarselect("tracker")
+</script>
+
+<script type="text/javascript">
+    var clockElement = document.getElementById('clock');
+
+    function clock() {
+       clockElement.textContent = new Date().toLocaleString();
+    }
+
+    setInterval(clock, 1000);
+</script>
+
+{% endblock %}<button class="btn btn-outline-warning"></button>

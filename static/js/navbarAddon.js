@@ -17,3 +17,4 @@ function navbarselect(item) {
 		document.getElementById("navprof").classList = "nav-link active shadow"
 	}
 }
+

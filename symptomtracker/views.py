@@ -78,7 +78,7 @@ def edit_profile(request):
 				if(request.user.first_name == ""):
 					messages.info(request, 'Registration process is complete')
 				else:
-					messages.info(request, 'Successfully updated the details')
+					messages.info(request, 'Successfully updated the profile')
 				this_user = request.user
 				this_user.first_name = newdata[0]
 				this_user.last_name = newdata[1]
@@ -117,6 +117,9 @@ def tracker(request):
 		return render(request, 'symptomtracker/tracker.html')
 	messages.info(request, 'Please login to use the symptom tracker')
 	return redirect('home')
+
+def daily_session(request):
+	return render(request, 'symptomtracker/daily_session.html')
 
 
 def admin_p(request):

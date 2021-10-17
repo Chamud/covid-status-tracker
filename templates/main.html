@@ -10,9 +10,11 @@
 
 	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 	
-	<!-- navbar css and js -->
+	<!--Bootstrap 5.1 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" type="text/css" media="all">
 	<script type="text/javascript"  src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- navbar css and js -->
 	<link rel="stylesheet" href="{% static '/css/navbarAddons.css' %}" />
 	<script type="text/javascript"  src="{% static '/js/navbarAddon.js' %}"></script>
 
@@ -22,6 +24,10 @@
 	<!--footer css-->
 	<link rel="stylesheet" href="{% static '/css/footer.css' %}" type="text/css" media="all">
 
+	<!-- Daily Session window css-->
+	<link rel="stylesheet" href="{% static '/css/dailysession.css' %}" type="text/css" media="all">
+	<script type="text/javascript"  src="{% static '/js/dailysession.js' %}"></script>
+
 	<!--admin panel-->
 	<link rel="stylesheet" href="{% static '/css/admtable.css' %}" type="text/css" media="all">
 	<script type="text/javascript"  src="{% static '/js/adminsearch.js' %}"></script>
@@ -29,7 +35,7 @@
 	<!--Forms in status tracker: data collect, new profile, profile-->
 	<link rel="stylesheet" href="{% static '/css/stforms.css' %}" type="text/css" media="all">
 
-	<!--Prodile css-->
+	<!--Profile css-->
 	<link rel="stylesheet" href="{% static '/css/profile.css' %}" />
 
 	<!-- Bootstrap Date-Picker Plugin -->
@@ -37,7 +43,9 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 
+
 </head>
+
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-navbarimage static-top" style="background-image: url({% static 'images/navbar.jpg' %});">

@@ -3,149 +3,188 @@
 
 {% block content %}
 
-<div id="topheading">
-	<span><h1>Personal Details</h1></span>
-	{% if request.user.first_name == "" %}
-		<p>Please complete the following form inorder to complete the registration process.</p>
-	{% else %}
-		<p>Update your personal details</p>
-	{% endif %}
-</div>
+<div id="editProfilePageWrapper">
+	<div id="topheading">
+		<span><h1>Personal Details</h1></span>
+		{% if request.user.first_name == "" %}
+			<p>Please complete the following form inorder to complete the registration process.</p>
+		{% else %}
+			<p>Update your personal details</p>
+		{% endif %}
+	</div>
 
 
-{% for message in messages %}
-	<div class="alert alert-primary"><p>{{ message }}</p></div>
-{% endfor %}
+	{% for message in messages %}
+		<div class="alert alert-primary"><p>{{ message }}</p></div>
+	{% endfor %}
 
-<div class="st_forms_wrapper">
-	<form method="POST">
-	{% csrf_token %}
-		<div class="form-row row">
-			<div class="form-group col-md-6">
-			    <label for="first-name" class="col-sm-2 col-form-label">First Name</label>
-			    
-			    	<input type="text" class="form-control" id="first-name" name="firstname" placeholder="First Name" {% if request.user.first_name != "" %} value="{{ editdata.0 }}" {% endif %} required>
-			    
+	<div class="st_forms_wrapper">
+		<form method="POST">
+		{% csrf_token %}
+			<div class="form-row row">
+				<div class="form-group col-md-6">
+				    <label for="first-name" class="col-sm-2 col-form-label">First Name</label>
+				    
+				    	<input type="text" class="form-control" id="first-name" name="firstname" placeholder="First Name" {% if request.user.first_name != "" %} value="{{ editdata.0 }}" {% endif %} required>
+				    
+				</div>
+				<div class="form-group col-md-6">
+				    <label for="last-name" class="col-sm-2 col-form-label">Last Name</label>
+				    
+				    	<input type="text" class="form-control" id="last-name" name="lastname" placeholder="Last Name"  {% if request.user.first_name != "" %} value="{{ editdata.1 }}" {% endif %} required>
+				    
+				</div>
 			</div>
-			<div class="form-group col-md-6">
-			    <label for="last-name" class="col-sm-2 col-form-label">Last Name</label>
-			    
-			    	<input type="text" class="form-control" id="last-name" name="lastname" placeholder="Last Name"  {% if request.user.first_name != "" %} value="{{ editdata.1 }}" {% endif %} required>
-			    
-			</div>
-		</div>
 
-		<div class="form-group row">
-			<label for="IDvalue" class="col-sm-2 col-form-label">Identity Number</label>
-				<div class="col">
-		    		<input type="text" class="form-control" id="IDvalue" name="IDvalue" placeholder="ID number"  {% if request.user.first_name != "" %} value="{{ editdata.2 }}" {% endif %}>
-		    	</div>
-			    <div class="col-md-2">
-			    	<select class="custom-select mr-sm-2" name="idtype" id="iIDtypeCustomSelect">
-			        	<option {% if request.user.first_name == "" %}selected {% endif %}>Other</option>
-			        	<option value="NIC" {% if request.user.first_name != "" %} {% if editdata.3 == "NIC" %} selected {% endif %}{% endif %}>NIC</option>
-			        	<option value="Passport" {% if request.user.first_name != "" %} {% if editdata.3 == "Passport" %} selected {% endif %}{% endif %}>Passport</option>
+			<div class="form-group row">
+				<label for="IDvalue" class="col-sm-2 col-form-label">Identity Number</label>
+					<div class="col">
+			    		<input type="text" class="form-control" id="IDvalue" name="IDvalue" placeholder="ID number"  {% if request.user.first_name != "" %} value="{{ editdata.2 }}" {% endif %}>
+			    	</div>
+				    <div class="col-md-2">
+				    	<select class="custom-select mr-sm-2" name="idtype" id="iIDtypeCustomSelect">
+				        	<option {% if request.user.first_name == "" %}selected {% endif %}>Other</option>
+				        	<option value="NIC" {% if request.user.first_name != "" %} {% if editdata.3 == "NIC" %} selected {% endif %}{% endif %}>NIC</option>
+				        	<option value="Passport" {% if request.user.first_name != "" %} {% if editdata.3 == "Passport" %} selected {% endif %}{% endif %}>Passport</option>
+				    	</select>
+				    </div>
+			</div>
+
+			<div class="form-group row">
+			    <label for="homeadd" class="col-sm-2 col-form-label">Address</label>
+			    <div class="col-sm-10">
+			    	<input type="text" class="form-control" id="homeadd" name="homeadd" placeholder="Home Address" required {% if request.user.first_name != "" %} value="{{ editdata.4 }}" {% endif %}>
+			    </div>
+			</div>
+
+			<div class="form-group row">
+			    <label for="dob" class="col-sm-2 col-form-label">Date-of-Birth</label>
+			    <div class="col-sm-10">
+			    	<input type="text" class="form-control" id="dob" name="dob" placeholder="DD/MM/YYYY" required {% if request.user.first_name != "" %} value="{{ editdata.5 }}" {% endif %}>
+			    </div>
+			</div>
+
+			<div class="form-group row">
+			    <label for="phone" class="col-sm-2 col-form-label">Contact Number</label>
+			    <div class="col-sm-10">
+			    	<input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone number" required {% if request.user.first_name != "" %} value="{{ editdata.6 }}" {% endif %}>
+			    </div>
+			</div>
+
+			<div class="form-group row">
+				<label for="vaccinated" class="col-sm-4 col-form-label">Vaccinated?</label>
+			    <div class="col-sm-6">
+			    	<select class="custom-select" name="vaccinated" id="vaccinated">
+			        	<option {% if request.user.first_name == "" %}selected {% endif %}>No</option>
+			        	<option value="Dose1" {% if request.user.first_name != "" %} {% if editdata.7 == "Dose1" %} selected {% endif %}{% endif %}>Yes - Dose 1</option>
+			        	<option value="Dose2" {% if request.user.first_name != "" %} {% if editdata.7 == "Dose2" %} selected {% endif %}{% endif %}>Yes - Dose 2</option>
 			    	</select>
 			    </div>
-		</div>
+			</div>
 
-		<div class="form-group row">
-		    <label for="homeadd" class="col-sm-2 col-form-label">Address</label>
-		    <div class="col-sm-10">
-		    	<input type="text" class="form-control" id="homeadd" name="homeadd" placeholder="Home Address" required {% if request.user.first_name != "" %} value="{{ editdata.4 }}" {% endif %}>
-		    </div>
-		</div>
+			<div class="form-group row">
+				<label for="covidstatus" class="col-sm-4 col-form-label">Have you been affected by Covid?</label>
+			    <div class="col-sm-6">
+			    	<select class="custom-select maxsize" name="covidstatus" id="covidstatus">
+			        	<option {% if request.user.first_name == "" %}selected {% endif %}>No</option>
+			        	<option value="Suspect" {% if request.user.first_name != "" %} {% if editdata.8 == "Suspect" %} selected {% endif %}{% endif %}>Not sure (I suspect I may have been affected)</option>
+			        	<option value="Patient" {% if request.user.first_name != "" %} {% if editdata.8 == "Patient" %} selected {% endif %}{% endif %}>Yes (I am  a covid patient)</option>
+			        	<option value="Recovered" {% if request.user.first_name != "" %} {% if editdata.8 == "Recovered" %} selected {% endif %}{% endif %}>Yes (But I am completely recovered now)</option>
+			    	</select>
+			    </div>
+			</div>
 
-		<div class="form-group row">
-		    <label for="dob" class="col-sm-2 col-form-label">Date-of-Birth</label>
-		    <div class="col-sm-10">
-		    	<input type="text" class="form-control" id="dob" name="dob" placeholder="DD/MM/YYYY" required {% if request.user.first_name != "" %} value="{{ editdata.5 }}" {% endif %}>
-		    </div>
-		</div>
+			<div class="form-group row">
+				<div class="alert alert-primary"><p class="text-center">If you have any major health conditions, please state them below.</p><p class="text-center text-warning bg-white">Leave blank if none.</p></div>
+			</div>
 
-		<div class="form-group row">
-		    <label for="phone" class="col-sm-2 col-form-label">Contact Number</label>
-		    <div class="col-sm-10">
-		    	<input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone number" required {% if request.user.first_name != "" %} value="{{ editdata.6 }}" {% endif %}>
-		    </div>
-		</div>
+			<!--Cardiovascular Disease-->
 
-		<div class="form-group row">
-			<label for="vaccinated" class="col-sm-4 col-form-label">Vaccinated?</label>
-		    <div class="col-sm-6">
-		    	<select class="custom-select" name="vaccinated" id="vaccinated">
-		        	<option {% if request.user.first_name == "" %}selected {% endif %}>No</option>
-		        	<option value="Dose1" {% if request.user.first_name != "" %} {% if editdata.7 == "Dose1" %} selected {% endif %}{% endif %}>Yes - Dose 1</option>
-		        	<option value="Dose2" {% if request.user.first_name != "" %} {% if editdata.7 == "Dose2" %} selected {% endif %}{% endif %}>Yes - Dose 2</option>
-		    	</select>
-		    </div>
-		</div>
+			<div class="form-group row">
+			    <label for="carddis" class="col-sm-3 col-form-label">Cardiovascular Disease</label>
+			    <div class="col-sm-2 d-flex">
+			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#CardiovascularD" aria-expanded="false" aria-controls="CardiovascularD">
+				    	Click to {% if editdata.9 == "" %}Add{% else %}Edit{% endif %}  	
+				    </button>
+			    </div>
+			    <div id="CardiovascularD" class="col-sm-7 collapse">
+			    	<textarea type="text" class="form-control" id="carddis" name="carddis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.9 }}{% endif %}</textarea>
+			    </div>
+			</div>
 
-		<div class="form-group row">
-			<label for="covidstatus" class="col-sm-4 col-form-label">Have you been affected by Covid?</label>
-		    <div class="col-sm-6">
-		    	<select class="custom-select maxsize" name="covidstatus" id="covidstatus">
-		        	<option {% if request.user.first_name == "" %}selected {% endif %}>No</option>
-		        	<option value="Suspect" {% if request.user.first_name != "" %} {% if editdata.8 == "Suspect" %} selected {% endif %}{% endif %}>Not sure (I suspect I may have been affected)</option>
-		        	<option value="Patient" {% if request.user.first_name != "" %} {% if editdata.8 == "Patient" %} selected {% endif %}{% endif %}>Yes (I am  a covid patient)</option>
-		        	<option value="Recovered" {% if request.user.first_name != "" %} {% if editdata.8 == "Recovered" %} selected {% endif %}{% endif %}>Yes (But I am completely recovered now)</option>
-		    	</select>
-		    </div>
-		</div>
+			<!--Diabetes-->
 
-		<div class="form-group row">
-			<div class="alert alert-primary"><p class="text-center">If you have any major health conditions, please state them below.</p><p class="text-center">Leave blank if none.</p></div>
-		</div>
-
-		<div class="form-group row">
-		    <label for="carddis" class="col-sm-2 col-form-label">Cardiovascular Disease</label>
-		    <div class="col-sm-10">
-		    	<textarea type="text" class="form-control" id="carddis" name="carddis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.9 }}{% endif %}</textarea>
-		    </div>
-		</div>
-
-		<div class="form-group row">
-		    <label for="diabdis" class="col-sm-2 col-form-label">Diabetes</label>
-		    <div class="col-sm-10">
-		    	<textarea type="text" class="form-control" id="diabdis" name="diabdis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.10 }}{% endif %}</textarea>
-		    </div>
-		</div>
-
-		<div class="form-group row">
-		    <label for="crddis" class="col-sm-2 col-form-label">Chronic Respiratory Disease</label>
-		    <div class="col-sm-10">
-		    	<textarea type="text" class="form-control" id="crddis" name="crddis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.11 }}{% endif %}</textarea>
-		    </div>
-		</div>
-
-		<div class="form-group row">
-		    <label for="cancdis" class="col-sm-2 col-form-label">Cancer</label>
-		    <div class="col-sm-10">
-		    	<textarea type="text" class="form-control" id="cancdis" name="cancdis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.12 }}{% endif %}</textarea>
-		    </div>
-		</div>
-
-		<div class="form-group row">
-		    <label for="othdis" class="col-sm-2 col-form-label">Other Diseases/Special Conditions</label>
-		    <div class="col-sm-10">
-		    	<textarea type="text" class="form-control" id="othdis" name="othdis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.13 }}{% endif %}</textarea>
-		    </div>
-		</div>
+			<div class="form-group row">
+			    <label for="diabdis" class="col-sm-3 col-form-label">Diabetes</label>
+			    <div class="col-sm-2 d-flex">
+			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#DiabetesD" aria-expanded="false" aria-controls="DiabetesD">
+				    	Click to {% if editdata.10 == "" %}Add{% else %}Edit{% endif %}  	
+				    </button>
+			    </div>
+			    <div id="DiabetesD" class="col-sm-7 collapse">
+			    	<textarea type="text" class="form-control" id="diabdis" name="diabdis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.10 }}{% endif %}</textarea>
+			    </div>
+			</div>
 
 
-		<div class="form-group row">
-	  	    <div class="col">
-	      		<button type="submit" class="btn btn-primary">Save</button>
-	      	</div>
-	      	{% if request.user.first_name != "" %}
-		      	<div id="backbutton" class="col-auto">
-		      		<a href="{% url 'profile' %}" class="btn btn-danger" role="button" aria-disabled="true">Back</a>
+			<!--Chronic Respiratory Disease-->
+
+			<div class="form-group row">
+			    <label for="crddis" class="col-sm-3 col-form-label">Chronic Respiratory Disease</label>
+			    <div class="col-sm-2 d-flex">
+			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#ChronicD" aria-expanded="false" aria-controls="ChronicD">
+				    	Click to {% if editdata.11 == "" %}Add{% else %}Edit{% endif %}  	
+				    </button>
+			    </div>
+			    <div id="ChronicD" class="col-sm-7 collapse">
+			    	<textarea type="text" class="form-control" id="crddis" name="crddis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.11 }}{% endif %}</textarea>
+			    </div>
+			</div>
+
+			<!--Cancere-->
+
+
+			<div class="form-group row">
+			    <label for="cancdis" class="col-sm-3 col-form-label">Cancer</label>
+			    <div class="col-sm-2 d-flex">
+			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#CancerD" aria-expanded="false" aria-controls="CancerD">
+				    	Click to {% if editdata.12 == "" %}Add{% else %}Edit{% endif %}  	
+				    </button>
+			    </div>
+			    <div id="CancerD" class="col-sm-7 collapse">
+			    	<textarea type="text" class="form-control" id="cancdis" name="cancdis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.12 }}{% endif %}</textarea>
+			    </div>
+			</div>
+
+
+			<!--Other Diseases-->
+
+			<div class="form-group row">
+			    <label for="othdis" class="col-sm-3 col-form-label">Other Diseases/Special Conditions</label>
+			    <div class="col-sm-2 d-flex">
+			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#OtherD" aria-expanded="false" aria-controls="OtherD">
+				    	Click to {% if editdata.13 == "" %}Add{% else %}Edit{% endif %}  	
+				    </button>
+			    </div>
+			    <div id="OtherD" class="col-sm-7 collapse">
+			    	<textarea type="text" class="form-control" id="othdis" name="othdis" placeholder="Description">{% if request.user.first_name != "" %}{{ editdata.13 }}{% endif %}</textarea>
+			    </div>
+			</div>
+
+
+			<div class="form-group row">
+		  	    <div class="col">
+		      		<button type="submit" class="btn btn-primary">Save</button>
 		      	</div>
-	      	{% endif %}
-	    </div>
-	</form>
+		      	{% if request.user.first_name != "" %}
+			      	<div id="backbutton" class="col-auto">
+			      		<a href="{% url 'profile' %}" class="btn btn-danger" role="button" aria-disabled="true">Back</a>
+			      	</div>
+		      	{% endif %}
+		    </div>
+		</form>
+	</div>
 </div>
-
 
 <script type="text/javascript">
 	window.onload = navbarselect("prof")

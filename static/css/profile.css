@@ -3,7 +3,7 @@ hr{
 	color: white;
 }
 
-#profilePageWrapper{
+#profilePageWrapper, #editProfilePageWrapper{
 	  background: url(../images/profilebg.png);
 	  background-size: auto 100%; 
 	  padding-top: 40px;

@@ -12,6 +12,8 @@ urlpatterns = [
     path('staff_panel', views.staff_p,  name='staff_panel'),
     path('profile', views.profile,  name='profile'),
     path('edit_profile', views.edit_profile,  name='edit_profile'),
+    path('daily_session', views.daily_session,  name='daily_session'),
+
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name = "accounts/passwordreset.html"),  name='reset_password'),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name = "accounts/passwordresetdone.html"),  name='password_reset_done'),
