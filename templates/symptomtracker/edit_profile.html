@@ -104,7 +104,7 @@
 			    <label for="carddis" class="col-sm-3 col-form-label">Cardiovascular Disease</label>
 			    <div class="col-sm-2 d-flex">
 			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#CardiovascularD" aria-expanded="false" aria-controls="CardiovascularD">
-				    	Click to {% if editdata.9 == "" %}Add{% else %}Edit{% endif %}  	
+				    	Click to {% if request.user.first_name != "" %}{% if editdata.9 == "" %}Add{% else %}Edit{% endif %}{% else %}Add{% endif %} 	
 				    </button>
 			    </div>
 			    <div id="CardiovascularD" class="col-sm-7 collapse">
@@ -118,7 +118,7 @@
 			    <label for="diabdis" class="col-sm-3 col-form-label">Diabetes</label>
 			    <div class="col-sm-2 d-flex">
 			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#DiabetesD" aria-expanded="false" aria-controls="DiabetesD">
-				    	Click to {% if editdata.10 == "" %}Add{% else %}Edit{% endif %}  	
+				    	Click to {% if request.user.first_name != "" %}{% if editdata.10 == "" %}Add{% else %}Edit{% endif %}{% else %}Add{% endif %}  	
 				    </button>
 			    </div>
 			    <div id="DiabetesD" class="col-sm-7 collapse">
@@ -133,7 +133,7 @@
 			    <label for="crddis" class="col-sm-3 col-form-label">Chronic Respiratory Disease</label>
 			    <div class="col-sm-2 d-flex">
 			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#ChronicD" aria-expanded="false" aria-controls="ChronicD">
-				    	Click to {% if editdata.11 == "" %}Add{% else %}Edit{% endif %}  	
+				    	Click to {% if request.user.first_name != "" %}{% if editdata.11 == "" %}Add{% else %}Edit{% endif %}{% else %}Add{% endif %} 	
 				    </button>
 			    </div>
 			    <div id="ChronicD" class="col-sm-7 collapse">
@@ -148,7 +148,7 @@
 			    <label for="cancdis" class="col-sm-3 col-form-label">Cancer</label>
 			    <div class="col-sm-2 d-flex">
 			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#CancerD" aria-expanded="false" aria-controls="CancerD">
-				    	Click to {% if editdata.12 == "" %}Add{% else %}Edit{% endif %}  	
+				    	Click to {% if request.user.first_name != "" %}{% if editdata.12 == "" %}Add{% else %}Edit{% endif %}{% else %}Add{% endif %} 	
 				    </button>
 			    </div>
 			    <div id="CancerD" class="col-sm-7 collapse">
@@ -163,7 +163,7 @@
 			    <label for="othdis" class="col-sm-3 col-form-label">Other Diseases/Special Conditions</label>
 			    <div class="col-sm-2 d-flex">
 			    	<button class="btn btn-info align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#OtherD" aria-expanded="false" aria-controls="OtherD">
-				    	Click to {% if editdata.13 == "" %}Add{% else %}Edit{% endif %}  	
+				    	Click to {% if request.user.first_name != "" %}{% if editdata.13 == "" %}Add{% else %}Edit{% endif %}{% else %}Add{% endif %}
 				    </button>
 			    </div>
 			    <div id="OtherD" class="col-sm-7 collapse">
@@ -172,13 +172,13 @@
 			</div>
 
 
-			<div class="form-group row">
+			<div id="editprof_bot_btn" class="form-group row">
 		  	    <div class="col">
-		      		<button type="submit" class="btn btn-primary">Save</button>
+		      		<button type="submit" class="btn btn-primary edi_bot_btn">Save</button>
 		      	</div>
 		      	{% if request.user.first_name != "" %}
 			      	<div id="backbutton" class="col-auto">
-			      		<a href="{% url 'profile' %}" class="btn btn-danger" role="button" aria-disabled="true">Back</a>
+			      		<a href="{% url 'profile' %}" class="btn btn-danger edi_bot_btn" role="button" aria-disabled="true">Back</a>
 			      	</div>
 		      	{% endif %}
 		    </div>

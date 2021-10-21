@@ -8,9 +8,9 @@
 --pseudo-hdSlider:  1%;
 --pseudo-dyspSlider:  1%;
 --pseudo-drycSlider:  1%;
---pseudo-DiarSlider
---pseudo-vomitSlider
---pseudo-NausSlider
+--pseudo-DiarSlider:  1%;
+--pseudo-vomitSlider:  1%;
+--pseudo-NausSlider: 1%;
 }
 
 #dailyFormWrapper{
@@ -171,4 +171,10 @@
 	margin-right: -1%;
 	border-radius: 20px;
 	padding-bottom: 15px !important;
+}
+#sympSubmit{
+	display: table;
+	margin: auto;
+	width: 100%;
+	max-width: 400px;
 }

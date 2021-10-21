@@ -29,7 +29,7 @@ function twoSlider(slider, slidevalue, mild, severe){
 		document.getElementById(mild).style.color = "green";
 	}
 	const root = document.querySelector(":root");
-	root.style.setProperty(slider, slidevalue*7.9+'%');
+	root.style.setProperty(slider, slidevalue*7.92+'%');
 }
 
 function threeSlider(slider, slidevalue, mild, painful, severe){
@@ -68,12 +68,14 @@ function threeSlider(slider, slidevalue, mild, painful, severe){
 	}
 
 	const root = document.querySelector(":root");
-	root.style.setProperty(slider, slidevalue*7.9+'%');
+	root.style.setProperty(slider, slidevalue*7.95+'%');
 }
+
 var clockElement = document.getElementById('clock');
 
 function clock() {
    clockElement.textContent = new Date().toLocaleString();
 }
-
-setInterval(clock, 1000);
+function clock() {
+   clockElement.textContent = new Date().toLocaleString();
+}

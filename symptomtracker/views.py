@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm
 from decouple import config
+import datetime
 
 #custom py files
 from . import alg
@@ -114,12 +115,75 @@ def tracker(request):
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			return redirect('edit_profile')
-		return render(request, 'symptomtracker/tracker.html')
+		if request.method == 'POST':
+			date_now = datetime.datetime.now().strftime('%d-%m-%Y')
+			end_err = mongoform.endSession(request.user.id, date_now)
+			if end_err != 0:
+				messages.info(request, "Database Error: Couldn't access the database")
+			return redirect('tracker')
+		dataset = mongoform.allSessions(request.user.id)
+		profile = mongoform.get_profile(request.user.id) 
+		if (dataset == -1 or profile == 0):
+			messages.info(request, "Database Error: Failed to retrive data from database.")
+			return redirect('home')
+		context = {"sessions" : dataset, "profile" : profile}
+		return render(request, 'symptomtracker/tracker.html', context)
 	messages.info(request, 'Please login to use the symptom tracker')
 	return redirect('home')
 
 def daily_session(request):
-	return render(request, 'symptomtracker/daily_session.html')
+	if request.user.is_authenticated:
+		if (request.user.first_name == ""):
+			return redirect('edit_profile')
+		if request.method == 'POST':
+			symptom = []
+			symptom.append(request.user.id)									#id
+			symptom.append(datetime.datetime.now().strftime('%d-%m-%Y')) 	#0
+			symptom.append(datetime.datetime.now().strftime('%H:%M'))		#1
+			symptom.append(float(request.POST.get('ColdSlider')))			#2
+			symptom.append(float(request.POST.get('JointPainSlider')))		#3
+			symptom.append(float(request.POST.get('WeakSlider')))			#4
+			symptom.append(float(request.POST.get('AppSlider')))			#5
+			symptom.append(float(request.POST.get('AbdPainSlider')))		#6
+			symptom.append(float(request.POST.get('ThroatSlider')))			#7
+			symptom.append(float(request.POST.get('headacheSlider')))		#8											
+			symptom.append(float(request.POST.get('bTempInput')))			#9	
+			symptom.append(float(request.POST.get('drychSlider')))			#10
+			symptom.append(float(request.POST.get('DyspSlider')))			#11
+			symptom.append(float(request.POST.get('NausSlider')))			#12
+			symptom.append(float(request.POST.get('vomitSlider')))			#13
+			symptom.append(float(request.POST.get('DiarSlider')))			#14
+			analysis_err = alg.symptomAnalysis(symptom)
+			if analysis_err != 0:
+				messages.info(request, "Database Error: Couldn't save data to the database")
+			return redirect('tracker')
+		days_arr = mongoform.lastSession(request.user.id)
+		if days_arr == -1:
+			messages.info(request, "Database Error: Couldn't access the database. Please try again later.")
+			return redirect('tracker')
+		elif days_arr == 0:
+			return render(request, 'symptomtracker/daily_session.html')
+		else:
+			today = datetime.datetime.now().strftime('%d-%m-%Y')
+			last_day = days_arr[-1]['Input_Data'][0]
+			last_time = days_arr[-1]['Input_Data'][1]
+			if len(days_arr)<2 or last_day != days_arr[-2]['Input_Data'][0] or last_day != today:
+				if last_day == today:
+					time_now = datetime.datetime.now().strftime('%H:%M')
+					time_dif = datetime.datetime.strptime(time_now, '%H:%M') - datetime.datetime.strptime(last_time, '%H:%M')
+					time_dif_in_time = (datetime.datetime.min + time_dif).time()
+					if time_dif_in_time < datetime.datetime.strptime('6:00','%H:%M').time():
+						wait_time = datetime.datetime.strptime('6:00','%H:%M') - time_dif
+						wait_time = wait_time.time()
+						msg = "You have to wait "+str(wait_time.hour)+" hours and "+str(wait_time.minute)+" minutes for the next session."
+						messages.info(request, msg)
+						return redirect('tracker')
+				return render(request, 'symptomtracker/daily_session.html')
+			messages.info(request, "You have completed two sessions for today! Please enter your symptoms again tomorrow.")	
+			return redirect('tracker')
+	messages.info(request, 'Please login to use the symptom tracker')
+	return redirect('home')
+	
 
 
 def admin_p(request):

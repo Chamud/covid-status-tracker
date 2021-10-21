@@ -1,0 +1,11 @@
+#tracker-container{
+	max-width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.dayCard{
+	transform: scale(0.98);
+}
+.button-bot-margin{
+	margin-bottom: 20px;
+}

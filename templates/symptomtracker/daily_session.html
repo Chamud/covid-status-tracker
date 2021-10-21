@@ -18,10 +18,10 @@
 		<div class="row">
 			<div id="BodyTemp" class="col-md-9 order-2 order-md-1 row sympCard">
 				<div class="col-md-3">
-					<label for="bTempInput" class="form-label">Temperature in °C</label>
+					<label for="bTempInput" class="form-label">Temperature (35°C～40°C)</label>
 				</div>
 				<div class="col-md-2">
-					<input type="number" id="bTempInput" class="form-control" name="quantity" min="35" max="40" step=".01" onkeyup="imposeMinMax(this)"> 
+					<input type="number" id="bTempInput" class="form-control" name="bTempInput" min="35" max="40" step=".01" onkeyup="imposeMinMax(this)" required> 
 				</div>
 			</div>
 
@@ -280,7 +280,7 @@
 		</div>
 
 		<div id="VomitSymptom" class="sympCard">
-			<label for="vomitSlider" class="form-label">Cold</label>
+			<label for="vomitSlider" class="form-label">Vomiting</label>
 			<div>
 				<div class="numberset">
 
@@ -324,25 +324,18 @@
 		</div>
 				
 
-
-		<input type="submit" class="btn btn-primary">
-
+		<div class="sympCard">
+			<input type="submit" id="sympSubmit" class="btn btn-primary">
+		</div>
 
 	</form>
 </div>
 
 <script type="text/javascript">
 	window.onload = navbarselect("tracker")
+	var clockElement = document.getElementById('clock');
+	setInterval(clock, 1000);
 </script>
 
-<script type="text/javascript">
-    var clockElement = document.getElementById('clock');
-
-    function clock() {
-       clockElement.textContent = new Date().toLocaleString();
-    }
-
-    setInterval(clock, 1000);
-</script>
 
 {% endblock %}<button class="btn btn-outline-warning"></button>

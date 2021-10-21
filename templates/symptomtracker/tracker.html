@@ -3,16 +3,316 @@
 
 {% block content %}
 
-<h1>This is the Symptom Tracker interface</h1>
-<img src="{% static 'images/tracker.png' %}">
+<div class="TopHeadings">
+	<h1>Symptom Tracker</h1>
+</div>
 
 {% for message in messages %}
-	<p>{{ message }}</p>
+	<div class="alert alert-primary"><p>{{ message }}</p></div>
 {% endfor %}
 
+	
+	{% if sessions == 0 %}
+		
+			<div class="alert alert-success">
+				<h4 class="alert-heading">Hey {{ request.user.first_name }}!</h4><p>There are no any ongoing or past sessions. Add daily symptoms to start a new session.</p>
+			</div>
 
+		<div class="d-flex justify-content-center">
+			<a role="button" href="{% url 'daily_session' %}" class="btn btn-success btn-lg text-white button-bot-margin">Add Daily Symptoms</a>
+		</div>
+<div id="tracker-container">
+	{% else %}
+	
+		{% with l_ses=sessions|last %}
+			{% if l_ses.Ending_date != "" %}
+				<div class="alert alert-success">
+					<h4 class="alert-heading">Hey {{ request.user.first_name }}!</h4><p>There's no any ongoing session. Add daily symptoms to start a new session.</p>
+				</div>
+			{% else %}
+				<div class="alert alert-success">
+					<h4 class="alert-heading">Hey {{ request.user.first_name }}!</h4>
+					<p>
+						{% with day_list=l_ses.days %}
+							{% with l_day=day_list|last %}
 
-<a href="{% url 'daily_session' %}">Daily Session</a>
+								{% if l_day.Results.10 == "0" %}Congratulation! You don’t seem to have been affected by Covid-19. Please continue the session for few more days for better analysis. Stay safe!{%endif %}
+
+								{% if l_day.Results.10 == "1" %}It seems you may have been affected by Covid-19. It is likely to be the 1st or 2nd day of having the virus. Stay isolated and continue the session for better analysis. Drink hot water!{%endif %}
+								
+								{% if l_day.Results.10 == "3" %}It seems you may have been affected by Covid-19. It is likely to be the 3rd day of having the virus. Stay isolated and continue the session for better analysis. Drink hot water!{%endif %}
+								
+								{% if l_day.Results.10 == "4" %}It seems you may have been affected by Covid-19. It is likely to be the 4th day of having the virus. Get ready to do a PCR/Antigen test if the symptoms get worse.{%endif %}
+								
+								{% if l_day.Results.10 == "5" %}It seems you may have been affected by Covid-19. It is likely to be the 5th day of having the virus. We highly recommend you to get a PCR/Antigen test as soon as possible.{%endif %}
+								
+								{% if l_day.Results.10 == "6" %}It seems you may have been affected by Covid-19. It is likely to be the 6th day of having the virus. We highly recommend you to get a PCR/Antigen test as soon as possible. Be ready to get hospitalized if symptoms get worse.{%endif %}
+
+								{% if l_day.Results.10 == "7" %}It seems that you have been affected by Covid-19 for about 7 days. Please get hosptalized within the next couple of days for proper treatements.{%endif %}
+								
+								{% if l_day.Results.10 == "8" %}It seems that you have been affected by Covid-19 for 8 or 9 days. Hospitalisation or medical supervision is needed for you to get recovered. There's chance of getting sepsis if proper treatments are not done.{%endif %}
+								
+								{% if l_day.Results.10 == "10" %}It seems that you have been affected by Covid-19 for about 10 days. Hospitalisation or medical supervision is highly required for you to get recovered. There's chance of getting sepsis if proper treatments are not done. Your situation could be critical.{%endif %}
+								
+								{% if l_day.Results.10 == "11" %}You seem to be in a critical situation. The analysis shows that you have been affected by covid for more than 11 days. You are adviced to get ICU treatments as soon as possible.{%endif %}
+
+							{% endwith %}
+						{% endwith %}
+					</p>
+					{% if profile.9 != "" or profile.10 != "" or profile.11 != "" or profile.12 != "" or profile.13 != "" %}
+					<p>
+						You have mentioned details of having,
+					</p>
+						{% if profile.9 != "" %}<p>Cardiovascular Disease</p>{% endif%}
+						{% if profile.10 != "" %}<p>Diabetes</p>{% endif%}
+						{% if profile.11 != "" %}<p>Chronic Respiratory Disease</p>{% endif%}
+						{% if profile.12 != "" %}<p>Cancer</p>{% endif%}
+						{% if profile.13 != "" %}<p>Special health conditions</p>{% endif%}
+					<p>
+						Please contact an specialist and get advice without a delay since coronavirus could be fatal to someone with aforementiond conditions.
+					</p>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% endwith %}
+
+<div id="tracker-container">
+		<div class="d-flex justify-content-center">
+			<a role="button" href="{% url 'daily_session' %}" class="btn btn-success btn-lg text-white button-bot-margin">Add Daily Symptoms</a>
+		</div>
+
+		{% for session in sessions reversed %}
+		<div class='card-body text-{% if session.Ending_date == ""  %}success{% else %}dark{% endif %}' >
+			<h5 class="card-title">{% if session.Ending_date == ""  %}Ongoing Session : Session Number {{ session.Session_Number }}{% else %}Past Session : Session Number {{ session.Session_Number }}{% endif %}</h5>
+		  	<div class="card-body row">
+		  		{% with day_list=session.days %}
+		  			{% for day in day_list %}
+				    	<div class="card col-md-4 dayCard border-dark">
+				    		<ul class="list-group list-group-flush">
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-7 text-secondary">Recorded Date</div>
+							    		<div class="col">{{ day.Input_Data.0 }}</div>
+									</div>
+								</li>
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-7 font-weight-bold  text-secondary">Recorded Time</div>
+							    		<div class="col">{{ day.Input_Data.1 }}</div>
+									</div>
+								</li>
+								<li class="list-group-item  text-secondary">Recorded Symptoms</li>
+
+								<li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Body Temperature</div>
+							    		<div class="col">{{ day.Input_Data.9 }}</div>
+									</div>
+							    </li>
+
+							    {% if day.Input_Data.7 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Sore Throat</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.7 < 4 %}Mild
+							    			{% elif day.Input_Data.7 < 7 %}Painful
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.8 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Headache</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.8 < 4 %}Mild
+							    			{% elif day.Input_Data.7 < 7 %}Painful
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+								{% if day.Input_Data.2 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Cold</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.2 < 6 %}Mild
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.3 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Pain in Joints</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.3 < 4 %}Mild
+							    			{% elif day.Input_Data.3 < 7 %}Painful
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.4 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Feeling weak</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.4 < 6 %}Occasional
+							    			{% else %}Often
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.5 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Loss of Appetite</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.5 < 6 %}Occasional
+							    			{% else %}Often
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.10 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Dru Cough</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.10 < 4 %}Mild
+							    			{% elif day.Input_Data.10 < 7 %}Painful
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.11 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Dyspnea</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.11 < 4 %}Occasional
+							    			{% elif day.Input_Data.11 < 7 %}Often
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.6 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Abdominal Pain</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.6 < 4 %}Mild
+							    			{% elif day.Input_Data.6 < 7 %}Painful
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.12 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Nausea</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.12 < 6 %}Mild
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.13 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Vomiting</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.13 < 6 %}Often
+							    			{% else %}Occasional
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    {% if day.Input_Data.14 > 1 %}
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-1"></div>
+							    		<div class="col-sm-6">Diarrhea</div>
+							    		<div class="col">
+							    			{% if day.Input_Data.14 < 6 %}Mild
+							    			{% else %}Severe
+							    			{% endif %}
+							    		</div>
+									</div>
+							    </li>
+							    {% endif %}
+
+							    <li class="list-group-item">
+							    	<div class="row bg-white">
+							    		<div class="col-sm-5 font-weight-bold  text-secondary">Conclusion</div>
+							    		<div class="col">
+							    			{{ day.Results.11 }}
+							    		</div>
+									</div>
+								</li>
+
+							</ul>
+				    	</div>
+			    	{% endfor %}
+		    	{% endwith %}
+		  	</div>
+		  	{% if session.Ending_date == ""  %}
+		  			<form method="POST" onsubmit="return confirm('Do you really want to end this session?');">
+						{% csrf_token %}
+						<div class="row">
+							<input type="submit" class="btn btn-outline-danger btn-sm col-md-2" value="End this session">
+							<p class="col-sm-10 text-danger">End this session only if you are fully recovered or under proper treatements.</p>
+						</div>
+					</form>
+		  	{% endif%}
+		</div>
+		{% endfor %}
+	{% endif%}
+</div>
+
 
 <script type="text/javascript">
 	window.onload = navbarselect("tracker")

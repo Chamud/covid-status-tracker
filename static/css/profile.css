@@ -2,6 +2,12 @@ hr{
 	border: 5px solid white;
 	color: white;
 }
+#editprof_bot_btn{
+	margin-top: 20px;
+}
+.edi_bot_btn{
+	min-width: 120px;
+}
 
 #profilePageWrapper, #editProfilePageWrapper{
 	  background: url(../images/profilebg.png);

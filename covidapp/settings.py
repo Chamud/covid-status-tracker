@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'symptomtracker',
     'map',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [

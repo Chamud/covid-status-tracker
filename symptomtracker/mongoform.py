@@ -36,22 +36,106 @@ def get_profile(id):
 		db_obj = json.loads(db_record, strict=False)
 		profile = database.UserData.find_one(db_obj)
 		profileData = []
-		profileData.append(profile['Name']['First'])
-		profileData.append(profile['Name']['Last'])
-		profileData.append(profile['ID_']['number'])
-		profileData.append(profile['ID_']['type'])
-		profileData.append(profile['Address'])
-		profileData.append(profile['Date_of_Birth'])
-		profileData.append(profile['Contact_Number'])
-		profileData.append(profile['Vaccinated?'])
-		profileData.append(profile['Affected_by_Covid?'])
-		profileData.append(profile['Health_Conditions']['Cardiovascular_Disease'])
-		profileData.append(profile['Health_Conditions']['Diabetes'])
-		profileData.append(profile['Health_Conditions']['Chronic_Respiratory_Disease'])
-		profileData.append(profile['Health_Conditions']['Cancer'])
-		profileData.append(profile['Health_Conditions']['Other'])
+		profileData.append(profile['Name']['First'])										#0
+		profileData.append(profile['Name']['Last'])											#1
+		profileData.append(profile['ID_']['number'])										#2
+		profileData.append(profile['ID_']['type'])											#3
+		profileData.append(profile['Address'])												#4
+		profileData.append(profile['Date_of_Birth'])										#5
+		profileData.append(profile['Contact_Number'])										#6
+		profileData.append(profile['Vaccinated?'])											#7
+		profileData.append(profile['Affected_by_Covid?'])									#8
+		profileData.append(profile['Health_Conditions']['Cardiovascular_Disease'])			#9	
+		profileData.append(profile['Health_Conditions']['Diabetes'])						#10	
+		profileData.append(profile['Health_Conditions']['Chronic_Respiratory_Disease'])		#11
+		profileData.append(profile['Health_Conditions']['Cancer'])							#12
+		profileData.append(profile['Health_Conditions']['Other'])							#13			
 		client.close()
 		return profileData
 	except:
 		client.close()
 		return 0
+
+def saveSymptoms(input_data, results):
+	try:
+		db_ID = "{\"ID\": \""+str(input_data[0])+"\" }"
+		db_obj = json.loads(db_ID, strict=False)
+		profile = database.UserData.find_one(db_obj)
+		
+		data_arrays = "\"Input_Data\" : [\""+input_data[1]+"\", \""+input_data[2]+"\", "+str(input_data[3])+", "+str(input_data[4])+", "+str(input_data[5])+", "+str(input_data[6])+", "+str(input_data[7])+", "+str(input_data[8])+", "+str(input_data[9])+", "+str(input_data[10])+", "+str(input_data[11])+", "+str(input_data[12])+", "+str(input_data[13])+", "+str(input_data[14])+", "+str(input_data[15])+"], \"Results\" : ["+str(results[0])+", "+str(results[1])+", "+str(results[2])+", "+str(results[3])+", "+str(results[4])+", "+str(results[5])+", "+str(results[6])+", "+str(results[7])+", "+str(results[8])+", "+str(results[9])+", \""+results[10]+"\", \""+results[11]+"\"] "
+
+		if 'Sessions' in profile:
+			session = profile['Sessions']
+			if session[-1]['Ending_date'] == "":
+				Session_num = session[-1]['Session_Number']
+				db_id = "{ \"ID\": \""+str(input_data[0])+"\", \"Sessions.Session_Number\": \""+str(Session_num)+"\"  }"
+				db_record = "{ \"$push\": { \"Sessions.$.days\": {"+data_arrays+"} } }"
+				db_obj1 = json.loads(db_id, strict=False)
+				db_obj2 = json.loads(db_record, strict=False)
+				database.UserData.update(db_obj1,db_obj2)
+			else:
+				Session_num = int(session[-1]['Session_Number']) + 1
+				db_id = "{ \"ID\": \""+str(input_data[0])+"\" }"																											
+				db_record = "{ \"$push\": { \"Sessions\": {\"Session_Number\" :\""+str(Session_num)+"\", \"Starting_Date\" : \""+input_data[1]+"\", \"Ending_date\": \"\", \"days\":[{"+data_arrays+" } ] } } }"
+				db_obj1 = json.loads(db_id, strict=False)
+				db_obj2 = json.loads(db_record, strict=False)
+				database.UserData.update(db_obj1,db_obj2)
+		else:
+			db_id = "{ \"ID\": \""+str(input_data[0])+"\" }"																											
+			db_record = "{ \"$push\": { \"Sessions\": {\"Session_Number\" :\"1\", \"Starting_Date\" : \""+input_data[1]+"\", \"Ending_date\": \"\", \"days\":[{"+data_arrays+" } ] } } }"
+			db_obj1 = json.loads(db_id, strict=False)
+			db_obj2 = json.loads(db_record, strict=False)
+			database.UserData.update(db_obj1,db_obj2)
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+	
+
+def lastSession(id):
+	try:
+		db_ID = "{\"ID\": \""+str(id)+"\" }"
+		db_obj = json.loads(db_ID, strict=False)
+		profile = database.UserData.find_one(db_obj)
+
+		if 'Sessions' in profile:
+				if profile['Sessions'][-1]['Ending_date'] == "":
+					client.close()
+					return profile['Sessions'][-1]['days']
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+
+def allSessions(id):
+	try:
+		db_ID = "{\"ID\": \""+str(id)+"\" }"
+		db_obj = json.loads(db_ID, strict=False)
+		profile = database.UserData.find_one(db_obj)
+		if 'Sessions' in profile:
+			client.close()
+			return profile['Sessions']
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+
+
+def endSession(id, date):
+	db_ID = "{\"ID\": \""+str(id)+"\" }"
+	db_obj = json.loads(db_ID, strict=False)
+	profile = database.UserData.find_one(db_obj)
+	if 'Sessions' in profile:
+		session = profile['Sessions']
+		if session[-1]['Ending_date'] == "":
+			Session_num = session[-1]['Session_Number']
+			db_id = "{ \"ID\": \""+str(id)+"\", \"Sessions.Session_Number\": \""+str(Session_num)+"\"  }"
+			db_record = "{ \"$set\":{ \"Sessions.$.Ending_date\" : \""+date+"\" } }"
+			db_obj1 = json.loads(db_id, strict=False)
+			db_obj2 = json.loads(db_record, strict=False)
+			database.UserData.update(db_obj1, db_obj2)
+	client.close()
+	return 0
