@@ -1,0 +1,39 @@
+#mapContainer{
+	width: 94%;
+	margin-left: 3%;
+	margin-right: 3%;
+	min-height: 200px;
+	background-color: lightblue;
+}
+
+#map{
+	position: absolute; top: 0; bottom: 0; width: 100%;
+	margin-top: 150px;
+	width: 90%;
+	height: 75%;
+	left: 5%;
+}
+.center{
+	text-align: center;
+}
+
+.marker {
+	color: red;
+	display: block;
+	border: 1px;
+	border-radius: 50%;
+	cursor: pointer;
+	padding: 0;
+}
+
+.geocoder {
+    position: absolute;
+    z-index: 1;
+    width: 50%;
+    left: 50%;
+    margin-left: -25%;
+    top: 100px;
+}
+.mapboxgl-ctrl-geocoder {
+	min-width: 100%;
+}

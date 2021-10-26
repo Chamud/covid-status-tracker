@@ -4,7 +4,102 @@
 {% block content %}
 
 <h1>This is the Map interface</h1>
-<img src="{% static 'images/map.png' %}">
+
+
+<h1 class="center">COVID MAP</h1>
+
+
+
+
+
+            
+				<div id="map"></div>
+				<div id="geocoder" class="geocoder"></div>
+
+             <script>
+
+                mapboxgl.accessToken = 'pk.eyJ1IjoiaW1hc2hhOTMiLCJhIjoiY2t1dXNmb2pjMWV3azJub2QzeHhxdnRreCJ9.t5SN1m6yAvDiGANFJyAowA'; //add to .env
+          
+         
+                const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [80.7047272491285, 7.60808521895433],
+                zoom: 6
+                });
+                //popup
+                const popup1 = new mapboxgl.Popup().setHTML(
+                  `<h3>Colombo</h3><p>covid patient=21</p>`
+                );
+                //marker
+                 const marker1 = new mapboxgl.Marker({color: 'red'})
+                .setLngLat([79.8448199685663, 6.93434553663874])
+                .setPopup(popup1)
+                .addTo(map);
+
+                const popup2 = new mapboxgl.Popup().setHTML(
+                  `<h3>Badulla</h3><p>covid patient=21</p>`
+                );
+
+                 const marker2 = new mapboxgl.Marker({color: 'red'})
+                .setLngLat([81.05639, 6.98472])
+                .setPopup(popup2)
+                .addTo(map);
+
+                const popup3 = new mapboxgl.Popup().setHTML(
+                  `<h3>Kaduwela</h3><p>covid patient=21</p>`
+                );
+                const marker3 = new mapboxgl.Marker({color: 'red'})
+                .setLngLat([79.984292323, 6.935757206])
+                .setPopup(popup3)
+                .addTo(map);
+
+                const popup4 = new mapboxgl.Popup().setHTML(
+                  `<h3>Polonnaruwa</h3><p>covid patient=21</p>`
+                );
+
+                const marker4 = new mapboxgl.Marker({color: 'red'})
+                .setLngLat([81.000306224, 7.939754203])
+                .setPopup(popup4)
+                .addTo(map);
+
+
+
+                const popup6 = new mapboxgl.Popup().setHTML(
+                  `<h3>Deniyaya</h3><p>covid patient=21</p>`
+                );
+
+                const marker6 = new mapboxgl.Marker({color: 'red'})
+                .setLngLat([80.560617987, 6.342563726])
+                .setPopup(popup6)
+                .addTo(map);
+
+                const popup7 = new mapboxgl.Popup().setHTML(
+                  `<h3>Vavuniya</h3><p>covid patient=21</p>`
+                );
+                const marker7 = new mapboxgl.Marker({color: 'red'})
+                .setLngLat([80.5, 8.83333])
+                .setPopup(popup7)
+                .addTo(map);
+
+
+
+
+
+                   // Add the control to the map.
+                 const geocoder = new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken,
+                    mapboxgl: mapboxgl
+                });
+
+                    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+                    map.addControl(new mapboxgl.NavigationControl());//zoom icon
+            </script>
+
+
+
+
 
 
 <script type="text/javascript">
