@@ -72,10 +72,6 @@ function threeSlider(slider, slidevalue, mild, painful, severe){
 }
 
 var clockElement = document.getElementById('clock');
-
-function clock() {
-   clockElement.textContent = new Date().toLocaleString();
-}
 function clock() {
    clockElement.textContent = new Date().toLocaleString();
 }
