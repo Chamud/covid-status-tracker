@@ -6,7 +6,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm
 from decouple import config
-import datetime
+import dateutil.tz as dtz
+from datetime import *
+import pytz
 
 #custom py files
 from . import alg
@@ -116,7 +118,9 @@ def tracker(request):
 		if (request.user.first_name == ""):
 			return redirect('edit_profile')
 		if request.method == 'POST':
-			date_now = datetime.datetime.now().strftime('%d-%m-%Y')
+			timestamp = datetime.utcnow().timestamp()
+			timeNow = datetime.fromtimestamp(timestamp)
+			date_now = timeNow.strftime('%d-%m-%Y')
 			end_err = mongoform.endSession(request.user.id, date_now)
 			if end_err != 0:
 				messages.info(request, "Database Error: Couldn't access the database")
@@ -136,10 +140,12 @@ def daily_session(request):
 		if (request.user.first_name == ""):
 			return redirect('edit_profile')
 		if request.method == 'POST':
+			timestamp = datetime.utcnow().timestamp()
+			timeNow = datetime.fromtimestamp(timestamp)
 			symptom = []
 			symptom.append(request.user.id)									#id
-			symptom.append(datetime.datetime.now().strftime('%d-%m-%Y')) 	#0
-			symptom.append(datetime.datetime.now().strftime('%H:%M'))		#1
+			symptom.append(timeNow.strftime('%d-%m-%Y')) 					#0
+			symptom.append(timeNow.strftime('%H:%M'))						#1
 			symptom.append(float(request.POST.get('ColdSlider')))			#2
 			symptom.append(float(request.POST.get('JointPainSlider')))		#3
 			symptom.append(float(request.POST.get('WeakSlider')))			#4
@@ -164,12 +170,16 @@ def daily_session(request):
 		elif days_arr == 0:
 			return render(request, 'symptomtracker/daily_session.html')
 		else:
-			today = datetime.datetime.now().strftime('%d-%m-%Y')
+			timestamp = datetime.utcnow().timestamp()
+			timeNow = datetime.fromtimestamp(timestamp)
+			today = timeNow.strftime('%d-%m-%Y')
 			last_day = days_arr[-1]['Input_Data'][0]
 			last_time = days_arr[-1]['Input_Data'][1]
 			if len(days_arr)<2 or last_day != days_arr[-2]['Input_Data'][0] or last_day != today:
 				if last_day == today:
-					time_now = datetime.datetime.now().strftime('%H:%M')
+					timestamp = datetime.utcnow().timestamp()
+					timeNow = datetime.fromtimestamp(timestamp)
+					time_now = timeNow.strftime('%H:%M')
 					time_dif = datetime.datetime.strptime(time_now, '%H:%M') - datetime.datetime.strptime(last_time, '%H:%M')
 					time_dif_in_time = (datetime.datetime.min + time_dif).time()
 					if time_dif_in_time < datetime.datetime.strptime('6:00','%H:%M').time():
