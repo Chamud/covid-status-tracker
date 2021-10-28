@@ -118,8 +118,7 @@ def tracker(request):
 		if (request.user.first_name == ""):
 			return redirect('edit_profile')
 		if request.method == 'POST':
-			timestamp = datetime.utcnow().timestamp()
-			timeNow = datetime.fromtimestamp(timestamp)
+			timeNow = datetime.now().astimezone(pytz.timezone('Asia/Colombo'))
 			date_now = timeNow.strftime('%d-%m-%Y')
 			end_err = mongoform.endSession(request.user.id, date_now)
 			if end_err != 0:
@@ -140,8 +139,7 @@ def daily_session(request):
 		if (request.user.first_name == ""):
 			return redirect('edit_profile')
 		if request.method == 'POST':
-			timestamp = datetime.utcnow().timestamp()
-			timeNow = datetime.fromtimestamp(timestamp)
+			timeNow = datetime.now().astimezone(pytz.timezone('Asia/Colombo'))
 			symptom = []
 			symptom.append(request.user.id)									#id
 			symptom.append(timeNow.strftime('%d-%m-%Y')) 					#0
@@ -170,15 +168,13 @@ def daily_session(request):
 		elif days_arr == 0:
 			return render(request, 'symptomtracker/daily_session.html')
 		else:
-			timestamp = datetime.utcnow().timestamp()
-			timeNow = datetime.fromtimestamp(timestamp)
+			timeNow = datetime.now().astimezone(pytz.timezone('Asia/Colombo'))
 			today = timeNow.strftime('%d-%m-%Y')
 			last_day = days_arr[-1]['Input_Data'][0]
 			last_time = days_arr[-1]['Input_Data'][1]
 			if len(days_arr)<2 or last_day != days_arr[-2]['Input_Data'][0] or last_day != today:
 				if last_day == today:
-					timestamp = datetime.utcnow().timestamp()
-					timeNow = datetime.fromtimestamp(timestamp)
+					timeNow = datetime.now().astimezone(pytz.timezone('Asia/Colombo'))
 					time_now = timeNow.strftime('%H:%M')
 					time_dif = datetime.datetime.strptime(time_now, '%H:%M') - datetime.datetime.strptime(last_time, '%H:%M')
 					time_dif_in_time = (datetime.datetime.min + time_dif).time()
