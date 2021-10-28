@@ -176,10 +176,10 @@ def daily_session(request):
 				if last_day == today:
 					timeNow = datetime.now().astimezone(pytz.timezone('Asia/Colombo'))
 					time_now = timeNow.strftime('%H:%M')
-					time_dif = datetime.datetime.strptime(time_now, '%H:%M') - datetime.datetime.strptime(last_time, '%H:%M')
-					time_dif_in_time = (datetime.datetime.min + time_dif).time()
-					if time_dif_in_time < datetime.datetime.strptime('6:00','%H:%M').time():
-						wait_time = datetime.datetime.strptime('6:00','%H:%M') - time_dif
+					time_dif = datetime.strptime(time_now, '%H:%M') - datetime.strptime(last_time, '%H:%M')
+					time_dif_in_time = (datetime.min + time_dif).time()
+					if time_dif_in_time < datetime.strptime('6:00','%H:%M').time():
+						wait_time = datetime.strptime('6:00','%H:%M') - time_dif
 						wait_time = wait_time.time()
 						msg = "You have to wait "+str(wait_time.hour)+" hours and "+str(wait_time.minute)+" minutes for the next session."
 						messages.info(request, msg)
