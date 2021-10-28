@@ -117,13 +117,16 @@ def tracker(request):
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			return redirect('edit_profile')
-		if request.method == 'POST':
+		if request.method == 'POST' and 'EndSession' in request.POST:
 			timeNow = datetime.now().astimezone(pytz.timezone('Asia/Colombo'))
 			date_now = timeNow.strftime('%d-%m-%Y')
 			end_err = mongoform.endSession(request.user.id, date_now)
 			if end_err != 0:
 				messages.info(request, "Database Error: Couldn't access the database")
 			return redirect('tracker')
+		if request.method == 'POST' and 'printReport' in request.POST:
+			messages.info(request, "Printing")
+			return redirect('home')
 		dataset = mongoform.allSessions(request.user.id)
 		profile = mongoform.get_profile(request.user.id) 
 		if (dataset == -1 or profile == 0):

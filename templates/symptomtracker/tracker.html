@@ -303,7 +303,7 @@
 		  			<form method="POST" onsubmit="return confirm('Do you really want to end this session?');">
 						{% csrf_token %}
 						<div class="row">
-							<input type="submit" class="btn btn-outline-danger btn-sm col-md-2" value="End this session">
+							<input type="submit" name="EndSession" class="btn btn-outline-danger btn-sm col-md-2" value="End this session">
 							<p class="col-sm-10 text-danger">End this session only if you are fully recovered or under proper treatements.</p>
 						</div>
 					</form>
@@ -311,6 +311,13 @@
 		</div>
 		{% endfor %}
 	{% endif%}
+
+	<form method="POST">
+		{% csrf_token %}
+		<div class="row">
+			<input type="submit" name="printReport" class="btn btn-outline-primary btn-sm col-md-2" value="Print a Full Report">
+		</div>
+	</form>
 </div>
 
 
