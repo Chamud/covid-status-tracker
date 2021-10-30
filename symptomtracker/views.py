@@ -9,14 +9,35 @@ from decouple import config
 import dateutil.tz as dtz
 from datetime import *
 import pytz
+import json
 
 #custom py files
 from . import alg
 from . import mongoform
 
+#for pdf coversion
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+def render_to_pdf(template_src, context_data={}):
+	template = get_template(template_src)
+	html = template.render(context_data)
+	result = BytesIO()
+	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
+	return 0
+
  
 def home(request):
-	return render(request, 'home.html')
+	contArr = mongoform.getContacts()
+	if contArr == 0:
+		messages.info(request, "Database Error: Failed to get some data from database.")
+	context = {"contacts":contArr}
+	return render(request, 'home.html', context)
+	
 
 def register(request):
 	form = CreateUserForm()
@@ -125,8 +146,18 @@ def tracker(request):
 				messages.info(request, "Database Error: Couldn't access the database")
 			return redirect('tracker')
 		if request.method == 'POST' and 'printReport' in request.POST:
-			messages.info(request, "Printing")
-			return redirect('home')
+			dataset = mongoform.allSessions(request.user.id)
+			profile = mongoform.get_profile(request.user.id) 
+			if (dataset == -1 or profile == 0):
+				messages.info(request, "Database Error: Failed to retrive data from database.")
+				return redirect('home')
+			context = {"sessions" : dataset, "profile" : profile}
+			pdf = render_to_pdf('symptomtracker/printReport.html', context)
+			response = HttpResponse(pdf, content_type='application/pdf')
+			filename = "Covid_Status_Report_of_%s.pdf" %(request.user.first_name)
+			content = "attachment; filename=%s" %(filename)
+			response['Content-Disposition'] = content
+			return response
 		dataset = mongoform.allSessions(request.user.id)
 		profile = mongoform.get_profile(request.user.id) 
 		if (dataset == -1 or profile == 0):
@@ -235,6 +266,35 @@ def admin_p(request):
 
 def staff_p(request):
 	if request.user.is_staff:
-		return render(request, 'staffpanel.html')
+		if request.method == 'POST' and 'update' in request.POST:
+			data = request.POST.get('updateData')
+			cont_data = json.loads(data, strict=False)
+			if mongoform.addContacts(cont_data) == -1:
+				messages.info(request, "Database Error: Failed to access the database.")
+		if request.method == 'POST' and 'updateLoc' in request.POST:
+			data = request.POST.get('updateDataLoc')
+			loc_data = json.loads(data, strict=False)
+			if mongoform.addLoc(loc_data) == -1:
+				messages.info(request, "Database Error: Failed to access the database.")
+		if request.method == 'POST' and 'delete' in request.POST:
+			data = request.POST.get('deleteData')
+			if mongoform.delContacts(data) == -1:
+				messages.info(request, "Database Error: Failed to delete.")
+		if request.method == 'POST' and 'deleteLoc' in request.POST:
+			data = request.POST.get('deleteDataLoc')
+			if mongoform.delLoc(data) == -1:
+				messages.info(request, "Database Error: Failed to delete.")
+
+		contArr = mongoform.getContacts()
+		mapArr = mongoform.getMap()
+
+		if contArr == 0 or mapArr == 0:
+			messages.info(request, "Database Error: Failed to get some data from database.")
+
+		context = {
+			"contacts": contArr,
+			"locations":mapArr
+		}
+		return render(request, 'staffpanel.html', context)
 	messages.info(request, 'Access denied!')
 	return redirect('home')

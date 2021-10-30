@@ -1,0 +1,18 @@
+#homeContacts{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+#contactTBhome a{
+	color: black !important;
+	text-decoration: none !important;
+}
+#contactTBhome a:hover{
+	color: #aaa !important;
+}
+#HomecontactSearchWrap{
+	display: flex;
+}
+#Homecontactsearchbar{
+	max-width: 200px;
+}

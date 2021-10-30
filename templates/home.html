@@ -19,10 +19,62 @@
 
 <h1>How to use Covid Status Tracker</h1>
 
-<h1>Contact Lists</h1>
+<hr class="profilehr">
+<div id="homeContacts">
+	<h1>Contact Lists</h1>
+	<div id="HomecontactSearchWrap"> 
+		<input id="Homecontactsearchbar" input class="form-control" type="search" aria-label="Search" placeholder="City Name">
+		<button type="button" id="Home-searchbtn-bt" class="btn btn-secondary" onclick="searchhomecontact()">Search</button>
+	</div>
+	<div class="tablewrap">
+		<table class="table table-hover table-bordered tableadm">
+			<thead class="thead-dark">
+			    <tr>
+			      <th scope="col">City</th>
+			      <th scope="col" colspan="2">PHI</th>
+			      <th scope="col" colspan="2">Police</th>
+			      <th scope="col" colspan="2">Hospital</th>
+			    </tr>
+			    <tr>
+			    	<td></td>
+			    	<td>Name</td>
+			    	<td>Contact No.</td>
+			    	<td>Name</td>
+			    	<td>Contact No.</td>
+			    	<td>Name</td>
+			    	<td>Contact No.</td>
+			    </tr>
+		  	</thead>
+		  	<tbody id="contactTBhome">
+		  	{% for contact in contacts %}
+			  	<tr>
+			  		<td>{{contact.city}}</td>
+			  		<td>{{contact.PHI.name}}</td>
+			  		<td><a href="tel:{{contact.PHI.number}}">{{contact.PHI.number}}</a></td>
+			  		<td>{{contact.Police.name}}</td>
+			  		<td><a href="tel:{{contact.Police.number}}">{{contact.Police.number}}</a></td>
+			  		<td>{{contact.Hospital.name}}</td>
+			  		<td><a href="tel:{{contact.Hospital.number}}">{{contact.Hospital.number}}</a></td>
+			  	</tr>
+			{% endfor %}
+		 	</tbody>
+		</table>
+	</div>	
+</div>
+
+
 
 <script type="text/javascript">
 	window.onload = navbarselect("home")
+
+	window.onload = function(){
+		document.getElementById("Homecontactsearchbar").addEventListener("keyup", function(event) {
+		    event.preventDefault();
+		    if (event.keyCode === 13) {
+		        searchhomecontact();
+		    	} 
+		});
+	}
 </script>
 
 {% endblock %}

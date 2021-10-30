@@ -14,9 +14,9 @@
 	
 	{% if sessions == 0 %}
 		
-			<div class="alert alert-success">
-				<h4 class="alert-heading">Hey {{ request.user.first_name }}!</h4><p>There are no any ongoing or past sessions. Add daily symptoms to start a new session.</p>
-			</div>
+		<div class="alert alert-success">
+			<h4 class="alert-heading">Hey {{ request.user.first_name }}!</h4><p>There are no any ongoing or past sessions. Add daily symptoms to start a new session.</p>
+		</div>
 
 		<div class="d-flex justify-content-center">
 			<a role="button" href="{% url 'daily_session' %}" class="btn btn-success btn-lg text-white button-bot-margin">Add Daily Symptoms</a>
@@ -60,17 +60,23 @@
 						{% endwith %}
 					</p>
 					{% if profile.9 != "" or profile.10 != "" or profile.11 != "" or profile.12 != "" or profile.13 != "" %}
-					<p>
-						You have mentioned details of having,
-					</p>
-						{% if profile.9 != "" %}<p>Cardiovascular Disease</p>{% endif%}
-						{% if profile.10 != "" %}<p>Diabetes</p>{% endif%}
-						{% if profile.11 != "" %}<p>Chronic Respiratory Disease</p>{% endif%}
-						{% if profile.12 != "" %}<p>Cancer</p>{% endif%}
-						{% if profile.13 != "" %}<p>Special health conditions</p>{% endif%}
-					<p>
-						Please contact an specialist and get advice without a delay since coronavirus could be fatal to someone with aforementiond conditions.
-					</p>
+						{% with day_list=l_ses.days %}
+							{% with l_day=day_list|last %}
+								{%  if l_day.Results.10 != "0"%}
+								<p>
+									You have mentioned details of having,
+								</p>
+									{% if profile.9 != "" %}<p>Cardiovascular Disease</p>{% endif%}
+									{% if profile.10 != "" %}<p>Diabetes</p>{% endif%}
+									{% if profile.11 != "" %}<p>Chronic Respiratory Disease</p>{% endif%}
+									{% if profile.12 != "" %}<p>Cancer</p>{% endif%}
+									{% if profile.13 != "" %}<p>Special health conditions</p>{% endif%}
+								<p>
+									Please contact an specialist and get advice without a delay since coronavirus could be fatal to someone with aforementiond conditions.
+								</p>
+								{% endif %}
+							{% endwith %}
+						{% endwith %}
 					{% endif %}
 				</div>
 			{% endif %}
@@ -312,12 +318,14 @@
 		{% endfor %}
 	{% endif%}
 
-	<form method="POST">
-		{% csrf_token %}
-		<div class="row">
-			<input type="submit" name="printReport" class="btn btn-outline-primary btn-sm col-md-2" value="Print a Full Report">
-		</div>
-	</form>
+	{% if sessions != 0 %}
+		<form method="POST">
+			{% csrf_token %}
+			<div class="row">
+				<input type="submit" name="printReport" class="btn btn-primary btn-sm col-md-2" value="Download Report">
+			</div>
+		</form>
+	{% endif %}
 </div>
 
 

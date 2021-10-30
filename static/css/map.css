@@ -5,10 +5,15 @@
 	min-height: 200px;
 	background-color: lightblue;
 }
+.maxwidthEigh{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
 
 #map{
 	position: absolute; top: 0; bottom: 0; width: 100%;
-	margin-top: 150px;
+	margin-top: 190px;
 	width: 90%;
 	height: 75%;
 	left: 5%;
@@ -35,5 +40,8 @@
     top: 100px;
 }
 .mapboxgl-ctrl-geocoder {
-	min-width: 100%;
+	width: 90% !important;
+}
+#mapholder{
+	height: 500px;
 }

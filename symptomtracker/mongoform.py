@@ -125,17 +125,85 @@ def allSessions(id):
 
 
 def endSession(id, date):
-	db_ID = "{\"ID\": \""+str(id)+"\" }"
-	db_obj = json.loads(db_ID, strict=False)
-	profile = database.UserData.find_one(db_obj)
-	if 'Sessions' in profile:
-		session = profile['Sessions']
-		if session[-1]['Ending_date'] == "":
-			Session_num = session[-1]['Session_Number']
-			db_id = "{ \"ID\": \""+str(id)+"\", \"Sessions.Session_Number\": \""+str(Session_num)+"\"  }"
-			db_record = "{ \"$set\":{ \"Sessions.$.Ending_date\" : \""+date+"\" } }"
-			db_obj1 = json.loads(db_id, strict=False)
-			db_obj2 = json.loads(db_record, strict=False)
-			database.UserData.update(db_obj1, db_obj2)
-	client.close()
-	return 0
+	try:
+		db_ID = "{\"ID\": \""+str(id)+"\" }"
+		db_obj = json.loads(db_ID, strict=False)
+		profile = database.UserData.find_one(db_obj)
+		if 'Sessions' in profile:
+			session = profile['Sessions']
+			if session[-1]['Ending_date'] == "":
+				Session_num = session[-1]['Session_Number']
+				db_id = "{ \"ID\": \""+str(id)+"\", \"Sessions.Session_Number\": \""+str(Session_num)+"\"  }"
+				db_record = "{ \"$set\":{ \"Sessions.$.Ending_date\" : \""+date+"\" } }"
+				db_obj1 = json.loads(db_id, strict=False)
+				db_obj2 = json.loads(db_record, strict=False)
+				database.UserData.update(db_obj1, db_obj2)
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+
+def addContacts(contact):
+	try:
+		db_id = "{\"city\":\""+contact['city']+"\"}"
+		db_obj1 = json.loads(db_id, strict=False)
+		database.contact.update(db_obj1, contact, upsert=True)
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+
+def delContacts(contact):
+	try:
+		db_id = "{\"city\":\""+contact+"\"}"
+		db_obj1 = json.loads(db_id, strict=False)
+		database.contact.delete_one(db_obj1)
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+
+def addLoc(locdata):
+	try:
+		db_id = "{\"locate\":\""+locdata['locate']+"\"}"
+		db_obj1 = json.loads(db_id, strict=False)
+		database.locations.update(db_obj1, locdata, upsert=True)
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+
+def delLoc(loc):
+	try:
+		db_id = "{\"locate\":\""+loc+"\"}"
+		db_obj1 = json.loads(db_id, strict=False)
+		database.locations.delete_one(db_obj1)
+		client.close()
+		return 0
+	except:
+		client.close()
+		return -1
+
+def getMap():
+	try:
+		db = database.locations.find()
+		arr = list(db)
+		client.close()
+		return arr
+	except:
+		client.close()
+		return 0
+
+def getContacts():
+	try:
+		db = database.contact.find()
+		arr = list(db)
+		client.close()
+		return arr
+	except:
+		client.close()
+		return 0

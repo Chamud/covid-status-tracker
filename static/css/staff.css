@@ -1,0 +1,60 @@
+#staffTblContacts tr td{
+	border-right-width: 3px;
+}
+#staffTblContacts tr th{
+	border-width: 2px;
+}
+#staffwrapper{
+	max-width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+#contactsearchbar{
+	max-width: 200px;
+}
+#contactSearchWrap{
+	display: flex;
+}
+#locationsearchbar{
+	max-width: 200px;
+}
+#locationSearchWrap{
+	display: flex;
+}
+#staffbtnholder{
+	max-width: 320px;
+}
+
+.minW{
+	min-width: 100px;
+	max-width: 200px;
+}
+.stafftbltn{
+	margin-left: 5px;
+	width: 100px;
+	border: 0;
+	border-radius: 56px;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+	font-size: 15px;
+	font-weight: 400;
+	outline: 0;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	transition: all .3s;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+}
+
+.stafftbltn:hover{
+	box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+  	transform: scale(1.05);
+}
+.stafftbltnaddnew{
+	max-width: 150px;
+	margin-top: 5px;
+}

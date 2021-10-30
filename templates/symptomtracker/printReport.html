@@ -1,0 +1,254 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Patient Details</h2>
+
+<table>
+	<tr>
+		<td>Patient Name</td>
+		<td>{{ profile.0 }} {{ profile.1 }}</td>
+	</tr>
+	<tr>
+		<td>ID Number</td>
+		<td>{{profile.2}}&nbsp{% if profile.3 == "NIC"%}(NIC){% elif profile.3 == "Passport"%}(Passport){% endif %}</td>
+	</tr>
+	<tr>
+		<td>Address</td>
+		<td>{{profile.4}}</td>
+	</tr>
+	<tr>
+		<td>Date of Birth</td>
+		<td>{{profile.5}}</td>
+	</tr>
+	<tr>
+		<td>Contact Number</td>
+		<td>{{profile.6}}</td>
+	</tr>
+	<tr>
+		<td>Vaccinated?</td>
+		<td>{{profile.7}}</td>
+	</tr>
+	<tr>
+		<td>Corona patient?</td>
+		<td>{{profile.8}}</td>
+	</tr>
+</table>
+
+
+	{% if profile.9 != "" or profile.10 != "" or profile.11 != "" or profile.12 != "" or profile.13 != "" %}
+	<hr >
+		{% if profile.9 != "" %}
+		<h5>Cardiovascular Disease</h5>
+		<p>{{ profile.9 }}</p>
+		{% endif %}
+
+		{% if profile.10 != "" %}
+		<h5>Diabetes</h5>
+		<p >{{ profile.10 }}</p>
+		{% endif %}
+
+		{% if profile.11 != "" %}
+		<h5 >Chronic Respiratory Disease</h5>
+		<p >{{ profile.11 }}</p>
+		{% endif %}
+
+		{% if profile.12 != "" %}
+		<h5 >Cancer</h5>
+		<p >{{ profile.12 }}</p>
+		{% endif %}
+
+		{% if profile.13 != "" %}
+		<h5 >Special Conditions</h5>
+		 <p >{{ profile.13 }}</p>
+		{% endif %}
+
+	{% endif %}
+	<hr >
+
+	
+	{% if sessions == 0 %}
+	<h3>There are no any sessions recorded.</h3>
+		
+	{% else %}
+	
+		{% with l_ses=sessions|last %}
+			{% if l_ses.Ending_date == "" %}
+					<h4>Current state of the patient</h4>
+					<p>
+						{% with day_list=l_ses.days %}
+							{% with l_day=day_list|last %}
+
+								{% if l_day.Results.10 == "0" %}It does't seem that this patient has been affected by Covid-19.{%endif %}
+
+								{% if l_day.Results.10 == "1" %}It seems that the patient may have been affected by Covid-19. It is likely to be the 1st or 2nd day of having the virus. {%endif %}
+								
+								{% if l_day.Results.10 == "3" %}It seems seems that this patient may have been affected by Covid-19. It is likely to be the 3rd day of having the virus.{%endif %}
+								
+								{% if l_day.Results.10 == "4" %}It seems seems that this patient may have been affected by Covid-19. It is likely to be the 4th day of having the virus.{%endif %}
+								
+								{% if l_day.Results.10 == "5" %}It seems seems that this patient may have been affected by Covid-19. It is likely to be the 5th day of having the virus.{%endif %}
+								
+								{% if l_day.Results.10 == "6" %}It seems seems that this patient may have been affected by Covid-19. It is likely to be the 6th day of having the virus.{%endif %}
+
+								{% if l_day.Results.10 == "7" %}It seems that seems that this patient have been affected by Covid-19 for about 7 days.{%endif %}
+								
+								{% if l_day.Results.10 == "8" %}It seems that seems that this patient have been affected by Covid-19 for 8 or 9 days.{%endif %}
+								
+								{% if l_day.Results.10 == "10" %}It seems that seems that this patient have been affected by Covid-19 for about 10 days.{%endif %}
+								
+								{% if l_day.Results.10 == "11" %}The analysis shows that this patient has been affected by covid for more than 11 days. {%endif %}
+
+							{% endwith %}
+						{% endwith %}
+					</p>
+			{% endif %}
+		{% endwith %}
+		
+
+	{% for session in sessions reversed %}
+	<hr>
+		<h5 >{% if session.Ending_date == ""  %}Ongoing Session : Session Number {{ session.Session_Number }}{% else %}Past Session : Session Number {{ session.Session_Number }}{% endif %}</h5>
+
+	  		{% with day_list=session.days %}
+	  			{% for day in day_list %}
+	  			<br>
+			    	<table >
+			    		<tr>
+			    			<td>Recorded Date</td>
+			    			<td>{{ day.Input_Data.0 }}</td>
+			    		</tr>
+			    		<tr>
+			    			<td>Recorded Time</td>
+			    			<td>{{ day.Input_Data.1 }}</td>
+			    		</tr>
+			    		<tr></tr>
+			    		</tr>
+			    		<tr>
+			    			<td>Body Temperature</td>
+			    			<td>{{ day.Input_Data.9 }}</td>
+			    		</tr>
+			    		{% if day.Input_Data.7 > 1 %}
+			    		<tr>
+			    			<td>Sore Throat</td>
+			    			<td>{% if day.Input_Data.7 < 4 %}Mild
+						    	{% elif day.Input_Data.7 < 7 %}Painful
+						    	{% else %}Severe
+						    	{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+			    		{% if day.Input_Data.8 > 1 %}
+			    		<tr>
+			    			<td>Headache</td>
+			    			<td>{% if day.Input_Data.8 < 4 %}Mild
+				    			{% elif day.Input_Data.7 < 7 %}Painful
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.2 > 1 %}
+			    		<tr>
+			    			<td>Cold</td>
+			    			<td>{% if day.Input_Data.2 < 6 %}Mild
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.3 > 1 %}
+			    		<tr>
+			    			<td>Pain in Joints</td>
+			    			<td>{% if day.Input_Data.3 < 4 %}Mild
+				    			{% elif day.Input_Data.3 < 7 %}Painful
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.4 > 1 %}
+			    		<tr>
+			    			<td>Feeling weak</td>
+			    			<td>{% if day.Input_Data.4 < 6 %}Occasional
+				    			{% else %}Often
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.5 > 1 %}
+			    		<tr>
+			    			<td>Loss of Appetite</td>
+			    			<td>{% if day.Input_Data.5 < 6 %}Occasional
+				    			{% else %}Often
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+					    {% if day.Input_Data.10 > 1 %}
+			    		<tr>
+			    			<td>Dru Cough</td>
+			    			<td>{% if day.Input_Data.10 < 4 %}Mild
+				    			{% elif day.Input_Data.10 < 7 %}Painful
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.11 > 1 %}
+			    		<tr>
+			    			<td>Dyspnea</td>
+			    			<td>{% if day.Input_Data.11 < 4 %}Occasional
+				    			{% elif day.Input_Data.11 < 7 %}Often
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+					    {% if day.Input_Data.6 > 1 %}
+			    		<tr>
+			    			<td>Abdominal Pain</td>
+			    			<td>{% if day.Input_Data.6 < 4 %}Mild
+				    			{% elif day.Input_Data.6 < 7 %}Painful
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.12 > 1 %}
+			    		<tr>
+			    			<td>Nausea</td>
+			    			<td>{% if day.Input_Data.12 < 6 %}Mild
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.13 > 1 %}
+			    		<tr>
+			    			<td>Vomiting</td>
+			    			<td>{% if day.Input_Data.13 < 6 %}Often
+				    			{% else %}Occasional
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+
+						{% if day.Input_Data.14 > 1 %}
+			    		<tr>
+			    			<td>Diarrhea</td>
+			    			<td>{% if day.Input_Data.14 < 6 %}Mild
+				    			{% else %}Severe
+				    			{% endif %}</td>
+			    		</tr>
+			    		{% endif %}
+			    	</table>
+			    	<h4>Conclusion</h4>
+			    	<p>{{ day.Results.11 }}</p>
+					<br> 
+		    	{% endfor %}
+	    	{% endwith %}
+		{% endfor %}
+	{% endif%}
+</body>
+</html>

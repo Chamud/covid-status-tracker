@@ -3,14 +3,157 @@
 
 {% block content %}
 
-<h1>This is staff panel</h1>
+<div id="topheading">
+	<span><h1>Hello {{ request.user.first_name }}! Welcome to the staff panel.</h1></span>
+</div>
 
 {% for message in messages %}
-	<p>{{ message }}</p>
+	<div class="alert alert-danger"><p>{{ message }}</p></div>
 {% endfor %}
+
+
+<div id="staffwrapper">
+	<div id="contactDetails">
+		<h4>Edit Contacts</h4>
+		<div id="contactSearchWrap"> 
+			<input id="contactsearchbar" input class="form-control" type="search" aria-label="Search" placeholder="City Name">
+			<button type="button" id="searchbtn-bt" class="btn btn-dark" onclick="searchByCity()">Search</button>
+		</div>
+		<div class="tablewrap">
+			<table id="staffTblContacts" class="table table-dark table-striped tableadm">
+				<thead>
+				    <tr>
+				      <th scope="col">City</th>
+				      <th scope="col" colspan="2">PHI</th>
+				      <th scope="col" colspan="2">Police</th>
+				      <th scope="col" colspan="2">Hospital</th>
+				      <th scope="col" colspan="2">Action</th>
+				    </tr>
+				    <tr>
+				    	<td></td>
+				    	<td>Name</td>
+				    	<td>Contact No.</td>
+				    	<td>Name</td>
+				    	<td>Contact No.</td>
+				    	<td>Name</td>
+				    	<td>Contact No.</td>
+				    	<td></td>
+				    </tr>
+			  	</thead>
+			  	<tbody id="staffContactTBody">
+			  	{% for contact in contacts %}
+				  	<tr><td><input type="text" class="form-control form-control-sm minW" value="{{contact.city}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{contact.PHI.name}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{contact.PHI.number}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{contact.Police.name}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{contact.Police.number}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{contact.Hospital.name}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{contact.Hospital.number}}"></td><td><div id="staffbtnholder"><form method="post"><input type="hidden" name="csrfmiddlewaretoken"><input type="submit" name="update" class="btn btn-primary btn-sm stafftbltn" value="Update" onclick="addUpDelValues(this)"><input type="hidden" name="updateData"><input type="submit" name="delete" class="btn btn-danger btn-sm stafftbltn" value="Delete" onclick="addUpDelValues(this)"><input type="hidden" name="deleteData"></form></div></td></tr>
+				{% endfor %}
+			 	</tbody>
+			</table>
+		</div>
+		<button class="btn btn-secondary btn-sm stafftbltnaddnew" onclick="addnewrow()">Add New</button>
+	</div>
+
+	<hr class="profilehr">
+
+	<div id="locationdetails">
+		<h4>Edit Location Data</h4>
+		<div id="locationSearchWrap"> 
+			<input id="locationsearchbar" input class="form-control" type="search" aria-label="Search" placeholder="Location Name">
+			<button type="button" id="searchbtn-bt" class="btn btn-dark" onclick="searchByLocate()">Search</button>
+		</div>
+		<div class="tablewrap">
+			<table id="staffTblLocations" class="table table-dark table-striped tableadm">
+				<thead>
+				    <tr>
+				      <th scope="col">Location</th>
+				      <th scope="col" >X Coordinate</th>
+				      <th scope="col">Y Coordinate</th>
+				      <th scope="col">Patient Count</th>
+				      <th scope="col">Action</th>
+				    </tr>
+			  	</thead>
+			  	<tbody id="stafflocateTBody">
+			  	{% for locat in locations %}
+				  	<tr><td><input type="text" class="form-control form-control-sm minW" value="{{locat.locate}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{locat.X}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{locat.Y}}"></td><td><input type="text" class="form-control form-control-sm minW" value="{{locat.count}}"></td><td><div id="staffbtnholder"><form method="post"><input type="hidden" name="csrfmiddlewaretoken"><input type="submit" name="updateLoc" class="btn btn-primary btn-sm stafftbltn" value="Update" onclick="addLocatValues(this)"><input type="hidden" name="updateDataLoc"><input type="submit" name="deleteLoc" class="btn btn-danger btn-sm stafftbltn" value="Delete" onclick="addLocatValues(this)"><input type="hidden" name="deleteDataLoc"></form></div></td></tr>
+				{% endfor %}
+			 	</tbody>
+			</table>
+		</div>
+		<button class="btn btn-secondary btn-sm stafftbltnaddnew" onclick="addnewlocrow()">Add New</button>
+	</div>
+</div>
+
+
+
+
+
+
 
 <script type="text/javascript">
 	window.onload = navbarselect("stf")
+
+	var token = "{{ csrf_token }}"
+
+
+	function addUpDelValues(elForm){
+
+		p_elem = elForm.parentElement.parentElement.parentElement.parentElement
+
+		city = p_elem.childNodes[0].childNodes[0].value
+		phiName = p_elem.childNodes[1].childNodes[0].value
+		phiNum = p_elem.childNodes[2].childNodes[0].value
+		polName = p_elem.childNodes[3].childNodes[0].value
+		polNum = p_elem.childNodes[4].childNodes[0].value
+		hosName = p_elem.childNodes[5].childNodes[0].value
+		hosNum = p_elem.childNodes[6].childNodes[0].value
+
+		elForm.parentElement.childNodes[0].value = token;
+		elForm.parentElement.childNodes[2].value = JSON.stringify({"city": city,
+																	"PHI": {"name": phiName, "number": phiNum},
+																	"Police" : {"name": polName, "number": polNum},
+																	"Hospital": {"name": hosName, "number": hosNum}
+																});
+		elForm.parentElement.childNodes[4].value = city;
+	}
+
+	function addLocatValues(elForm){
+		
+		p_elem = elForm.parentElement.parentElement.parentElement.parentElement
+
+		locate = p_elem.childNodes[0].childNodes[0].value
+		X = p_elem.childNodes[1].childNodes[0].value
+		Y = p_elem.childNodes[2].childNodes[0].value
+		count = p_elem.childNodes[3].childNodes[0].value
+
+		elForm.parentElement.childNodes[0].value = token;
+		elForm.parentElement.childNodes[2].value = JSON.stringify({"locate": locate,
+																	"X": X,
+																	"Y" : Y,
+																	"count": count,
+																});
+		elForm.parentElement.childNodes[4].value = locate;
+	}
+
+
+	window.onload = function(){
+		document.getElementById("contactsearchbar").addEventListener("keyup", function(event) {
+		    event.preventDefault();
+		    if (event.keyCode === 13) {
+		        searchByCity();
+		    	} 
+		});
+	}
+
+	window.onload = function(){
+		document.getElementById("locationsearchbar").addEventListener("keyup", function(event) {
+		    event.preventDefault();
+		    if (event.keyCode === 13) {
+		        searchByLocate();
+		    	} 
+		});
+	}
+
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+
 </script>
 
 {% endblock %}
