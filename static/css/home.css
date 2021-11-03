@@ -16,3 +16,6 @@
 #Homecontactsearchbar{
 	max-width: 200px;
 }
+#homeTable{
+	max-height: 200px !important;
+}

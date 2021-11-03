@@ -23,3 +23,4 @@ pyPdf2==1.26.0
 python-bidi==0.4.2 
 reportlab==3.6.2 
 xhtml2pdf==0.2.5
+
