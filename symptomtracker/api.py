@@ -25,9 +25,21 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
+#list of apis
+def apis(request):
+	context = {
+		"Home": "https://covidstatustracker.herokuapp.com/api/home",
+		"Map": "https://covidstatustracker.herokuapp.com/api/map",
+		"Profile": "https://covidstatustracker.herokuapp.com/api/profile",
+		"Edit_Profile": "https://covidstatustracker.herokuapp.com/api/edit_profile",
+		"Register": "https://covidstatustracker.herokuapp.com/api/register",
+		"Login": "https://covidstatustracker.herokuapp.com/api/login",
+		"Logout": "https://covidstatustracker.herokuapp.com/api/logout",
 
+	}
+	return JsonResponse(context)
 
-#Home page
+#Home api
 def home(request):
 	contArr = mongoform.getContacts()
 	if contArr == 0:
@@ -38,7 +50,6 @@ def home(request):
 		userfname = request.user.get_full_name() 
 	else:
 		userfname = "none"
-
 	data = JSONEncoder().encode(contArr)
 	data = json.loads(data)
 	url = "https://covidstatustracker.herokuapp.com/static/images/logo.png"
@@ -46,7 +57,7 @@ def home(request):
 	context = {"Message": messages, "render": render, "user": userfname, "media": url, "contacts": data }
 	return JsonResponse(context)
 
-#Show profile page
+#Show profile api
 def profile(request):
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
@@ -63,14 +74,14 @@ def profile(request):
 		acc_data = {"Account_ID": request.user.id, "Username": request.user.username, "Email": request.user.email}
 		messages = "Success"
 		render = "profile"
-		context = {"Message": messages, "render": render, "Account_data": acc_data, "user_data" : edit_data}
+		context = {"Message": messages, "render": render, "account_data": acc_data, "user_data" : edit_data}
 		return JsonResponse(context)
-	messages = "Please login to access the profile"
+	messages = "Login to access the profile"
 	render = "home"
 	context = {"Message": messages, "render": render}
 	return JsonResponse(context)
 	
-#Registration page
+#Registration api
 def register(request):
 	token = get_token(request)
 	if request.method == 'POST': #post data : csrfmiddlewaretoken, username, email, password1, password2
@@ -100,8 +111,95 @@ def register(request):
 	context = {"Message": messages, "render": render, 'form_token':token}
 	return JsonResponse(context)
 
+#Login api
+def loginuser(request):
+	token = get_token(request)
+	if request.user.is_authenticated:
+		messages = 'You are already logged in'
+		render = "home"
+		context = {"Message": messages, "render": render}
+		return JsonResponse(context)
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
+			messages = "Success"
+			render = "home"
+			context = {"Message": messages, "render": render}
+			return JsonResponse(context)
+		messages = 'Username OR password is incorrect'
+		render = "login"
+		context = {"Message": messages, "render": render, 'form_token':token}
+		return JsonResponse(context)
+	messages = "Success"
+	render = "login"
+	context = {"Message": messages, "render": render, 'form_token':token}
+	return JsonResponse(context)
 
+#Logout api
+def logoutuser(request):
+	logout(request)
+	messages = "Success"
+	render = "home"
+	context = {"Message": messages, "render": render}
+	return JsonResponse(context)
 
+#Edit profile page
+def edit_profile(request):
+	token = get_token(request)
+	if request.user.is_authenticated:
+		if request.method == 'POST':
+			newdata = [] #Get form data into an array
+			newdata.append(request.POST.get('firstname'))
+			newdata.append(request.POST.get('lastname'))
+			newdata.append(request.POST.get('IDvalue'))
+			newdata.append(request.POST.get('idtype'))
+			newdata.append(request.POST.get('homeadd'))
+			newdata.append(request.POST.get('dob'))
+			newdata.append(request.POST.get('phone'))
+			newdata.append(request.POST.get('vaccinated'))
+			newdata.append(request.POST.get('covidstatus'))
+			newdata.append(request.POST.get('carddis'))
+			newdata.append(request.POST.get('diabdis'))
+			newdata.append(request.POST.get('crddis'))
+			newdata.append(request.POST.get('cancdis'))
+			newdata.append(request.POST.get('othdis'))
+			db_errors = mongoform.edit_user(request.user.id, newdata)
+			if(db_errors==0):
+				this_user = request.user
+				this_user.first_name = newdata[0]
+				this_user.last_name = newdata[1]
+				this_user.save()
+				messages = "Success"
+				render = "home"
+				context = {"Message": messages, "render": render}
+				return JsonResponse(context)
+			else:
+				messages = "Database Error: Couldn't save data to the database"
+				render = "home"
+				context = {"Message": messages, "render": render}
+				return JsonResponse(context)
+		if(request.user.first_name == ""):
+			messages = "Success"
+			render = "edit_profile"
+			context = {"Message": messages, "render": render, 'form_token':token}
+			return JsonResponse(context)
+		edit_data = mongoform.get_profile(request.user.id) 
+		if (edit_data == 0):
+			messages = "Database Error: Failed to retrive data from database."
+			render = "home"
+			context = {"Message": messages, "render": render}
+			return JsonResponse(context)
+		messages = "Success"
+		render = "edit_profile"
+		context = { "Message": messages, "render": render, 'form_token':token, 'profile_data' : edit_data}
+		return JsonResponse(context)
+	messages = "Login to access"
+	render = "home"
+	context = {"Message": messages, "render": render}
+	return JsonResponse(context)
 
 
 

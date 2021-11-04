@@ -70,7 +70,7 @@ def register(request):
 			messages.info(request, 'An account was created for ' + new_user.username)
 			login(request, new_user)
 			return redirect('edit_profile')
-		messages.info(request, 'Please check th errors')
+		messages.info(request, 'Please check the errors')
 	context = {'form':form}
 	return render(request, 'accounts/register.html', context)
 	
