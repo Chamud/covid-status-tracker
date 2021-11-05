@@ -143,7 +143,7 @@ def tracker(request):
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			return redirect('edit_profile')
-		#on post req for ending the surrent session
+		#on post req for ending the current session
 		if request.method == 'POST' and 'EndSession' in request.POST:
 			timeNow = datetime.now().astimezone(pytz.timezone('Asia/Colombo'))
 			date_now = timeNow.strftime('%d-%m-%Y')
@@ -175,7 +175,7 @@ def tracker(request):
 	messages.info(request, 'Please login to use the symptom tracker')
 	return redirect('home')
 
-#Symptom insertion [age]
+#Symptom insertion page
 def daily_session(request):
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
@@ -236,7 +236,7 @@ def daily_session(request):
 	return redirect('home')
 	
 
-#Admin panel ppage
+#Admin panel page
 def admin_p(request):
 	if request.user.is_superuser:
 		User = get_user_model()
