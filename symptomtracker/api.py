@@ -57,7 +57,7 @@ def home(request):
 	data = json.loads(data)
 	url = "https://covidstatustracker.herokuapp.com/static/images/logo.png"
 	render = "home"
-	context = {"Message": messages, "render": render, "user": userfname, "media": url, "contacts": data }
+	context = {"Message": messages, "render": render, "user": userfname, "is_staff": request.user.is_staff, "is_admin": request.user.is_superuser, "media": url, "contacts": data }
 	return JsonResponse(context)
 
 #Show profile api
