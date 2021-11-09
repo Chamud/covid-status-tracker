@@ -43,11 +43,13 @@ INSTALLED_APPS = [
 
     'symptomtracker',
     'map',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -140,4 +142,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'covidstatustracker@gmail.com'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
+CORS_ALLOW_ALL_ORIGINS = True
 
