@@ -143,5 +143,5 @@ EMAIL_HOST_USER = 'covidstatustracker@gmail.com'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS = ['covidstatustracker.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['*']
 
