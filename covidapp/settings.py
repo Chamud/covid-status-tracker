@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['covidstatustracker.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -143,4 +143,5 @@ EMAIL_HOST_USER = 'covidstatustracker@gmail.com'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = ['covidstatustracker.herokuapp.com']
 
