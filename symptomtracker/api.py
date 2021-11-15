@@ -10,7 +10,8 @@ import dateutil.tz as dtz
 from datetime import *
 import pytz
 import json
-from django.middleware.csrf import get_token
+
+from django.views.decorators.csrf import csrf_exempt
 
 #custom py files
 from . import alg
@@ -115,8 +116,8 @@ def register(request):
 	return JsonResponse(context)
 
 #Login api
+@csrf_exempt
 def loginuser(request):
-	token = get_token(request)
 	if request.user.is_authenticated:
 		messages = 'You are already logged in'
 		render = "home"
@@ -134,11 +135,11 @@ def loginuser(request):
 			return JsonResponse(context)
 		messages = 'Username OR password is incorrect'
 		render = "login"
-		context = {"Message": messages, "render": render, 'form_token':token}
+		context = {"Message": messages, "render": render}
 		return JsonResponse(context)
 	messages = "Success"
 	render = "login"
-	context = {"Message": messages, "render": render, 'form_token':token}
+	context = {"Message": messages, "render": render}
 	return JsonResponse(context)
 
 #Logout api
@@ -150,8 +151,8 @@ def logoutuser(request):
 	return JsonResponse(context)
 
 #Edit profile api
+@csrf_exempt
 def edit_profile(request):
-	token = get_token(request)
 	if request.user.is_authenticated:
 		if request.method == 'POST':
 			newdata = [] #Get form data into an array
@@ -187,7 +188,7 @@ def edit_profile(request):
 		if(request.user.first_name == ""):
 			messages = "Success"
 			render = "edit_profile"
-			context = {"Message": messages, "render": render, 'form_token':token}
+			context = {"Message": messages, "render": render}
 			return JsonResponse(context)
 		edit_data = mongoform.get_profile(request.user.id) 
 		if (edit_data == 0):
@@ -197,7 +198,7 @@ def edit_profile(request):
 			return JsonResponse(context)
 		messages = "Success"
 		render = "edit_profile"
-		context = { "Message": messages, "render": render, 'form_token':token, 'profile_data' : edit_data}
+		context = { "Message": messages, "render": render, 'profile_data' : edit_data}
 		return JsonResponse(context)
 	messages = "Login to access"
 	render = "home"
@@ -205,8 +206,8 @@ def edit_profile(request):
 	return JsonResponse(context)
 
 #Symptom tracker api
+@csrf_exempt
 def tracker(request):
-	token = get_token(request)
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			messages = "Complete registration."
@@ -223,7 +224,7 @@ def tracker(request):
 			else:
 				messages = "Success"
 			render = "tracker"
-			context = {"Message": messages, "render": render, 'form_token':token}
+			context = {"Message": messages, "render": render}
 			return JsonResponse(context)
 		#on post req for printing a pdf report
 		if request.method == 'POST' and 'printReport' in request.POST:
@@ -250,7 +251,7 @@ def tracker(request):
 			return JsonResponse(context)
 		messages = "Success"
 		render = "tracker"
-		context = {"Message": messages, "render": render, 'form_token':token, "Sessions" : dataset, "Profile" : profile}
+		context = {"Message": messages, "render": render,"Sessions" : dataset, "Profile" : profile}
 		return JsonResponse(context)
 	messages = 'Please login to use the symptom tracker'
 	render = "home"
@@ -274,8 +275,8 @@ def render_to_pdf(template_src, context_data={}):
 	return 0
 
 #Symptom insertion api
+@csrf_exempt
 def daily_session(request):
-	token = get_token(request)
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			messages = "Complete registration."
@@ -320,7 +321,7 @@ def daily_session(request):
 		elif days_arr == 0:
 			messages = "Success"
 			render = "daily_session"
-			context = {"Message": messages, "render": render, 'form_token':token}
+			context = {"Message": messages, "render": render}
 			return JsonResponse(context)
 		else:
 			#Checking the time of last session and time for the next session
@@ -343,7 +344,7 @@ def daily_session(request):
 						return JsonResponse(context)
 				messages = "Success"
 				render = "daily_session"
-				context = {"Message": messages, "render": render, 'form_token':token}
+				context = {"Message": messages, "render": render}
 				return JsonResponse(context)
 			messages = "You have completed two sessions for today! Please enter your symptoms again tomorrow."
 			render = "tracker"
@@ -355,8 +356,8 @@ def daily_session(request):
 	return JsonResponse(context)
 
 #Admin panel api
+@csrf_exempt
 def admin_p(request):
-	token = get_token(request)
 	if request.user.is_superuser:
 		User = get_user_model()
 		users = User.objects.all()
@@ -405,7 +406,7 @@ def admin_p(request):
 			user_dict["Is_admin"] = each.is_superuser
 			newusersarr.append(user_dict)
 		render = "adminpanel"
-		context={"Message": messages, "render": render,'form_token':token, 'users': newusersarr}
+		context={"Message": messages, "render": render, 'users': newusersarr}
 		return JsonResponse(context)
 	messages = 'Access denied!'
 	render = "home"
@@ -413,8 +414,8 @@ def admin_p(request):
 	return JsonResponse(context)
 
 #Staff panel api
+@csrf_exempt
 def staff_p(request):
-	token = get_token(request)
 	if request.user.is_staff:
 		#Sending contact and location data for staff panel
 		cont = mongoform.getContacts()
@@ -461,7 +462,7 @@ def staff_p(request):
 				messages = "Success"
 
 		render = "staffpanel"
-		context = {"Message": messages, "render": render, 'form_token':token, "contacts": contArr, "locations":mapArr}
+		context = {"Message": messages, "render": render, "contacts": contArr, "locations":mapArr}
 		return JsonResponse(context)
 	messages = 'Access denied!'
 	render = "home"
