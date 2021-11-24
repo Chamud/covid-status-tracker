@@ -45,12 +45,7 @@ def apis(request):
 
 #Home api
 def home(request):
-	userName = request.GET['username']
-	password = request.GET['password']
-	user = authenticate(request, username=userName, password=password)
-	if user is not None:
-			login(request, user)
-			
+	print(request.GET['username'])
 	contArr = mongoform.getContacts()
 	if contArr == 0:
 		messages = "Database Error: Failed to get some data from database"
@@ -69,12 +64,6 @@ def home(request):
 
 #Show profile api
 def profile(request):
-	userName = request.GET['username']
-	password = request.GET['password']
-	user = authenticate(request, username=userName, password=password)
-	if user is not None:
-			login(request, user)
-
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			messages = "Complete registration."
@@ -165,12 +154,6 @@ def logoutuser(request):
 #Edit profile api
 @csrf_exempt
 def edit_profile(request):
-	userName = request.GET['username']
-	password = request.GET['password']
-	user = authenticate(request, username=userName, password=password)
-	if user is not None:
-			login(request, user)
-			
 	if request.user.is_authenticated:
 		if request.method == 'POST':
 			newdata = [] #Get form data into an array
@@ -226,12 +209,6 @@ def edit_profile(request):
 #Symptom tracker api
 @csrf_exempt
 def tracker(request):
-	userName = request.GET['username']
-	password = request.GET['password']
-	user = authenticate(request, username=userName, password=password)
-	if user is not None:
-			login(request, user)
-			
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			messages = "Complete registration."
@@ -301,12 +278,6 @@ def render_to_pdf(template_src, context_data={}):
 #Symptom insertion api
 @csrf_exempt
 def daily_session(request):
-	userName = request.GET['username']
-	password = request.GET['password']
-	user = authenticate(request, username=userName, password=password)
-	if user is not None:
-			login(request, user)
-			
 	if request.user.is_authenticated:
 		if (request.user.first_name == ""):
 			messages = "Complete registration."
@@ -388,12 +359,6 @@ def daily_session(request):
 #Admin panel api
 @csrf_exempt
 def admin_p(request):
-	userName = request.GET['username']
-	password = request.GET['password']
-	user = authenticate(request, username=userName, password=password)
-	if user is not None:
-			login(request, user)
-			
 	if request.user.is_superuser:
 		User = get_user_model()
 		users = User.objects.all()
@@ -452,12 +417,6 @@ def admin_p(request):
 #Staff panel api
 @csrf_exempt
 def staff_p(request):
-	userName = request.GET['username']
-	password = request.GET['password']
-	user = authenticate(request, username=userName, password=password)
-	if user is not None:
-			login(request, user)
-			
 	if request.user.is_staff:
 		#Sending contact and location data for staff panel
 		cont = mongoform.getContacts()
