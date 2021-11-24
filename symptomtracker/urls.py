@@ -23,7 +23,7 @@ urlpatterns = [
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name = "accounts/passwordresetcomplete.html"),  name='password_reset_complete'),
 
     #api calls for the mobile application
-    path('api', api.apis,  name='apilist'),
+    #path('api', api.apis,  name='apilist'),
     path('api/home', api.home, name='apihome'),
     path('api/profile', api.profile,  name='apiprofile'),
     path('api/map', api.map,  name='apimap'),
