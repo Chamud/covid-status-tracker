@@ -19,3 +19,8 @@
 #homeTable{
 	max-height: 200px !important;
 }
+#howToUse{
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+}

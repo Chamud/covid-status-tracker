@@ -3,24 +3,34 @@
 
 {% block content %}
 
-<h1>This is home of Covid Status Tracker</h1>
+<div id="topheading">
+	<span><h1>Welcome to Covid Status Tracker</h1></span>
+	{% if user.is_anonymous %}
+		<p>Please <a href="{% url 'login' %}">login</a> to use all the features</p>
+	{% else %}
+		<h3> Hello {{ request.user.get_full_name }}!</h3>
+	{% endif %}
+</div>
+
 
 {% for message in messages %}
 	<div class="alert alert-primary"><p>{{ message }}</p></div>
 {% endfor %}
 
-{% if user.is_anonymous %}
-	<p>Please <a href="{% url 'login' %}">login</a> to use all the features</p>
-{% else %}
-	<p> Hello {{ request.user.get_full_name }}!</p>
-{% endif %}
 
 
-<h1>How to use Covid Status Tracker</h1>
+<div id="howToUse">
+	<h3>How to use the Covid Status Tracker</h3>
+	<h4>Symptom Tracker</h4>
+	<p>iuhbeafjc</p>
+	<h4>Covid Map</h4>
+	<p>iueajfcaegiub</p>
+</div>
 
 <hr class="profilehr">
+
 <div id="homeContacts">
-	<h1>Contact Lists</h1>
+	<h1>Contact List</h1>
 	<div id="HomecontactSearchWrap"> 
 		<input id="Homecontactsearchbar" input class="form-control" type="search" aria-label="Search" placeholder="City Name">
 		<button type="button" id="Home-searchbtn-bt" class="btn btn-secondary" onclick="searchhomecontact()">Search</button>
