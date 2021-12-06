@@ -273,9 +273,51 @@ def tracker(request):
 			render = "home"
 			context = {"Message": messages, "render": render}
 			return JsonResponse(context)
+		patient_data = '''Hello '''+request.user.first_name+'''\n'''
+		if(dataset == 0):
+			patient_data +='''\nThere are no any ongoing or past sessions. Add daily symptoms to start a new session.'''
+		else:
+			if(dataset[-1]['Ending_date'] != ''):
+				patient_data +='''\nThere are no any ongoing or past sessions. Add daily symptoms to start a new session.'''
+			else:
+				last_result = dataset[-1]['days'][-1]['Results'][10]
+				if( last_result == '0'):
+					patient_data +='''\nCongratulation! You don’t seem to have been affected by Covid-19. Please continue the session for few more days for better analysis. Stay safe!'''
+				elif( last_result == '1'):
+					patient_data +='''\nIt seems you may have been affected by Covid-19. It is likely to be the 1st or 2nd day of having the virus. Stay isolated and continue the session for better analysis. Drink hot water!'''
+				elif( last_result == '3'):
+					patient_data +='''\nIt seems you may have been affected by Covid-19. It is likely to be the 3rd day of having the virus. Stay isolated and continue the session for better analysis. Drink hot water!'''
+				elif( last_result == '4'):
+					patient_data +='''\nIt seems you may have been affected by Covid-19. It is likely to be the 4th day of having the virus. Get ready to do a PCR/Antigen test if the symptoms get worse.'''
+				elif( last_result == '5'):
+					patient_data +='''\nIt seems you may have been affected by Covid-19. It is likely to be the 5th day of having the virus. We highly recommend you to get a PCR/Antigen test as soon as possible.'''
+				elif( last_result == '6'):
+					patient_data +='''\nIt seems you may have been affected by Covid-19. It is likely to be the 6th day of having the virus. We highly recommend you to get a PCR/Antigen test as soon as possible. Be ready to get hospitalized if symptoms get worse.'''
+				elif( last_result == '7'):
+					patient_data +='''\nIt seems that you have been affected by Covid-19 for about 7 days. Please get hosptalized within the next couple of days for proper treatements.'''
+				elif( last_result == '8'):
+					patient_data +='''\nIt seems that you have been affected by Covid-19 for 8 or 9 days. Hospitalisation or medical supervision is needed for you to get recovered. There's chance of getting sepsis if proper treatments are not done.'''
+				elif( last_result == '10'):
+					patient_data +='''\nIt seems that you have been affected by Covid-19 for about 10 days. Hospitalisation or medical supervision is highly required for you to get recovered. There's chance of getting sepsis if proper treatments are not done. Your situation could be critical.'''
+				elif( last_result == '11'):
+					patient_data +='''\nYou seem to be in a critical situation. The analysis shows that you have been affected by covid for more than 11 days. You are adviced to get ICU treatments as soon as possible.'''
+				patient_data +='''\n'''
+				if(profile[9]!= '' or profile[10]!= '' or profile[11]!= '' or profile[12]!= '' or profile[13]!= ''):
+					patient_data += '''\nYou have mentioned details of having,'''
+					if(profile[9]!=''):
+						patient_data += '''\nCardiovascular Disease'''
+					if(profile[10]!=''):
+						patient_data += '''\nDiabetes'''
+					if(profile[11]!=''):
+						patient_data += '''\nChronic Respiratory Disease'''
+					if(profile[12]!=''):
+						patient_data += '''\nCancer'''
+					if(profile[13]!=''):
+						patient_data += '''\nSpecial health conditions'''
+					patient_data += '''\nPlease contact an specialist and get advice without a delay since coronavirus could be fatal to someone with aforementiond conditions.'''
 		messages = "Success"
 		render = "tracker"
-		context = {"Message": messages, "render": render,"Sessions" : dataset, "Profile" : profile}
+		context = {"Message": messages, "render": render,"Sessions" : dataset, "Profile" : profile, "patient_msg": patient_data}
 		return JsonResponse(context)
 	messages = 'Please login to use the symptom tracker'
 	render = "home"
