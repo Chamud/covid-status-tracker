@@ -333,7 +333,7 @@ def symptomAnalysis(symptom):
 
     #Displaying results
     #print("Profile :", symptom)
-    print("Days :", day)
+    #print("Days :", day)
 
     #sending data to MongoDB
     db_err = mongoform.saveSymptoms(symptom, day)

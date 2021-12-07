@@ -223,6 +223,34 @@ def edit_profile(request):
 	context = {"Message": messages, "render": render}
 	return JsonResponse(context)
 
+#printing pdf
+@csrf_exempt
+def printpdf(request):
+	userName = request.GET['username']
+	password = request.GET['password']
+	user = authenticate(request, username=userName, password=password)
+	if user is not None:
+			login(request, user)
+	if request.user.is_authenticated:	
+		dataset = mongoform.allSessions(request.user.id)
+		profile = mongoform.get_profile(request.user.id) 
+		if (dataset == -1 or profile == 0):
+			messages = "Database Error: Failed to retrive data from database."
+			render = "home"
+			context = {"Message": messages, "render": render}
+			return JsonResponse(context)
+		context = {"sessions" : dataset, "profile" : profile}
+		pdf = render_to_pdf('symptomtracker/printReport.html', context)
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = "Covid_Status_Report_of_%s.pdf" %(request.user.first_name)
+		content = "attachment; filename=%s" %(filename)
+		response['Content-Disposition'] = content
+		return response
+	messages = "Authentication Error."
+	render = "tracker"
+	context = {"Message": messages, "render": render}
+	return JsonResponse(context)
+
 #Symptom tracker api
 @csrf_exempt
 def tracker(request):
@@ -250,22 +278,6 @@ def tracker(request):
 			render = "tracker"
 			context = {"Message": messages, "render": render}
 			return JsonResponse(context)
-		#on post req for printing a pdf report
-		if request.method == 'POST' and 'printReport' in request.POST:
-			dataset = mongoform.allSessions(request.user.id)
-			profile = mongoform.get_profile(request.user.id) 
-			if (dataset == -1 or profile == 0):
-				messages = "Database Error: Failed to retrive data from database."
-				render = "home"
-				context = {"Message": messages, "render": render}
-				return JsonResponse(context)
-			context = {"sessions" : dataset, "profile" : profile}
-			pdf = render_to_pdf('symptomtracker/printReport.html', context)
-			response = HttpResponse(pdf, content_type='application/pdf')
-			filename = "Covid_Status_Report_of_%s.pdf" %(request.user.first_name)
-			content = "attachment; filename=%s" %(filename)
-			response['Content-Disposition'] = content
-			return response
 		dataset = mongoform.allSessions(request.user.id)
 		profile = mongoform.get_profile(request.user.id) 
 		if (dataset == -1 or profile == 0):
@@ -273,7 +285,7 @@ def tracker(request):
 			render = "home"
 			context = {"Message": messages, "render": render}
 			return JsonResponse(context)
-		patient_data = '''Hello '''+request.user.first_name+'''\n'''
+		patient_data = '''Hello '''+request.user.first_name+'''!\n'''
 		if(dataset == 0):
 			patient_data +='''\nThere are no any ongoing or past sessions. Add daily symptoms to start a new session.'''
 		else:

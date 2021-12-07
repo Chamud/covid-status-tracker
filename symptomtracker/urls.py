@@ -35,5 +35,6 @@ urlpatterns = [
     path('api/daily_session', api.daily_session,  name='apidaily_session'),
     path('api/admin_panel', api.admin_p,  name='apiadmin_panel'),
     path('api/staff_panel', api.staff_p,  name='apistaff_panel'),
+    path('api/print_report', api.printpdf,  name='print_report'),
 ]
  

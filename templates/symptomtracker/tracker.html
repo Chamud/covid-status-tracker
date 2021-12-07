@@ -23,7 +23,6 @@
 		</div>
 <div id="tracker-container">
 	{% else %}
-	
 		{% with l_ses=sessions|last %}
 			{% if l_ses.Ending_date != "" %}
 				<div class="alert alert-success">
@@ -113,7 +112,7 @@
 							    	<div class="row bg-white">
 							    		<div class="col-sm-1"></div>
 							    		<div class="col-sm-6">Body Temperature</div>
-							    		<div class="col">{{ day.Input_Data.9 }}</div>
+							    		<div class="col">{{ day.Input_Data.9 }}°C</div>
 									</div>
 							    </li>
 
@@ -139,7 +138,7 @@
 							    		<div class="col-sm-6">Headache</div>
 							    		<div class="col">
 							    			{% if day.Input_Data.8 < 4 %}Mild
-							    			{% elif day.Input_Data.7 < 7 %}Painful
+							    			{% elif day.Input_Data.8 < 7 %}Painful
 							    			{% else %}Severe
 							    			{% endif %}
 							    		</div>
@@ -197,7 +196,7 @@
 							    		<div class="col-sm-6">Loss of Appetite</div>
 							    		<div class="col">
 							    			{% if day.Input_Data.5 < 6 %}Occasional
-							    			{% else %}Often
+							    			{% else %}Always
 							    			{% endif %}
 							    		</div>
 									</div>
@@ -208,7 +207,7 @@
 							    <li class="list-group-item">
 							    	<div class="row bg-white">
 							    		<div class="col-sm-1"></div>
-							    		<div class="col-sm-6">Dru Cough</div>
+							    		<div class="col-sm-6">Dry Cough</div>
 							    		<div class="col">
 							    			{% if day.Input_Data.10 < 4 %}Mild
 							    			{% elif day.Input_Data.10 < 7 %}Painful
