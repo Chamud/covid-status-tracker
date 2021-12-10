@@ -24,3 +24,13 @@
 	margin-left: 5%;
 	margin-right: 5%;
 }
+.padding50{
+	padding: 20px;
+}
+#homeWrapper{
+	background-color: lightcyan;
+	padding-bottom: 30px;
+	padding-top: 25px;
+	margin-top: -42px;
+	margin-bottom: -42px;
+}

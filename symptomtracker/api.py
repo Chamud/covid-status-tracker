@@ -290,7 +290,7 @@ def tracker(request):
 			patient_data +='''\nThere are no any ongoing or past sessions. Add daily symptoms to start a new session.'''
 		else:
 			if(dataset[-1]['Ending_date'] != ''):
-				patient_data +='''\nThere are no any ongoing or past sessions. Add daily symptoms to start a new session.'''
+				patient_data +='''\nThere are no any ongoing sessions. Add daily symptoms to start a new session.'''
 			else:
 				last_result = dataset[-1]['days'][-1]['Results'][10]
 				if( last_result == '0'):

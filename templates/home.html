@@ -2,75 +2,81 @@
 {% load static %}
 
 {% block content %}
-
-<div id="topheading">
-	<span><h1>Welcome to Covid Status Tracker</h1></span>
-	{% if user.is_anonymous %}
-		<p>Please <a href="{% url 'login' %}">login</a> to use all the features</p>
-	{% else %}
-		<h3> Hello {{ request.user.get_full_name }}!</h3>
-	{% endif %}
-</div>
-
-
-{% for message in messages %}
-	<div class="alert alert-primary"><p>{{ message }}</p></div>
-{% endfor %}
-
-
-
-<div id="howToUse">
-	<h3>How to use the Covid Status Tracker</h3>
-	<h4>Symptom Tracker</h4>
-	<p>iuhbeafjc</p>
-	<h4>Covid Map</h4>
-	<p>iueajfcaegiub</p>
-</div>
-
-<hr class="profilehr">
-
-<div id="homeContacts">
-	<h1>Contact List</h1>
-	<div id="HomecontactSearchWrap"> 
-		<input id="Homecontactsearchbar" input class="form-control" type="search" aria-label="Search" placeholder="City Name">
-		<button type="button" id="Home-searchbtn-bt" class="btn btn-secondary" onclick="searchhomecontact()">Search</button>
+<div id="homeWrapper">
+	<div id="topheading">
+		<span><h1>Welcome to Covid Status Tracker</h1></span>
+		{% if user.is_anonymous %}
+			<p>Please <a href="{% url 'login' %}">login</a> to use all the features</p>
+		{% else %}
+			<h3> Hello {{ request.user.get_full_name }}!</h3>
+		{% endif %}
 	</div>
-	<div id="homeTable" class="tablewrap">
-		<table class="table table-hover table-bordered tableadm">
-			<thead class="thead-dark">
-			    <tr>
-			      <th scope="col">City</th>
-			      <th scope="col" colspan="2">PHI</th>
-			      <th scope="col" colspan="2">Police</th>
-			      <th scope="col" colspan="2">Hospital</th>
-			    </tr>
-			    <tr>
-			    	<td></td>
-			    	<td>Name</td>
-			    	<td>Contact No.</td>
-			    	<td>Name</td>
-			    	<td>Contact No.</td>
-			    	<td>Name</td>
-			    	<td>Contact No.</td>
-			    </tr>
-		  	</thead>
-		  	<tbody id="contactTBhome">
-		  	{% for contact in contacts %}
-			  	<tr>
-			  		<td>{{contact.city}}</td>
-			  		<td>{{contact.PHI.name}}</td>
-			  		<td><a href="tel:{{contact.PHI.number}}">{{contact.PHI.number}}</a></td>
-			  		<td>{{contact.Police.name}}</td>
-			  		<td><a href="tel:{{contact.Police.number}}">{{contact.Police.number}}</a></td>
-			  		<td>{{contact.Hospital.name}}</td>
-			  		<td><a href="tel:{{contact.Hospital.number}}">{{contact.Hospital.number}}</a></td>
-			  	</tr>
-			{% endfor %}
-		 	</tbody>
-		</table>
-	</div>	
-</div>
 
+
+	{% for message in messages %}
+		<div class="alert alert-primary"><p>{{ message }}</p></div>
+	{% endfor %}
+
+
+
+	<div id="howToUse">
+		<div class="card border-info mb-3">
+			<div class="padding50">
+				<h3>About Covid Status Tracker</h3>
+				<h4>Symptom Tracker</h4>
+				<p>You can use the symptom tracker to record your daily symptoms, then get the results of analyzed sysmptoms along with suggestions and guidence.</p>
+				<h4>Covid Map</h4>
+				<p>The Covid map will show you the number of patients in each city.</p>
+
+				<h5> The mobile version of Covid Status Tracker contains features to notify you when you are in a critical area with a high concentration of covid patients.</h5>
+			</div>
+		</div>
+	</div>
+
+	<hr class="profilehr">
+
+	<div id="homeContacts">
+		<h1>Contact List</h1>
+		<div id="HomecontactSearchWrap"> 
+			<input id="Homecontactsearchbar" input class="form-control" type="search" aria-label="Search" placeholder="City Name">
+			<button type="button" id="Home-searchbtn-bt" class="btn btn-secondary" onclick="searchhomecontact()">Search</button>
+		</div>
+		<div id="homeTable" class="tablewrap">
+			<table class="table table-hover table-bordered tableadm">
+				<thead class="thead-dark">
+				    <tr>
+				      <th scope="col">City</th>
+				      <th scope="col" colspan="2">PHI</th>
+				      <th scope="col" colspan="2">Police</th>
+				      <th scope="col" colspan="2">Hospital</th>
+				    </tr>
+				    <tr>
+				    	<td></td>
+				    	<td>Name</td>
+				    	<td>Contact No.</td>
+				    	<td>Name</td>
+				    	<td>Contact No.</td>
+				    	<td>Name</td>
+				    	<td>Contact No.</td>
+				    </tr>
+			  	</thead>
+			  	<tbody id="contactTBhome">
+			  	{% for contact in contacts %}
+				  	<tr>
+				  		<td>{{contact.city}}</td>
+				  		<td>{{contact.PHI.name}}</td>
+				  		<td><a href="tel:{{contact.PHI.number}}">{{contact.PHI.number}}</a></td>
+				  		<td>{{contact.Police.name}}</td>
+				  		<td><a href="tel:{{contact.Police.number}}">{{contact.Police.number}}</a></td>
+				  		<td>{{contact.Hospital.name}}</td>
+				  		<td><a href="tel:{{contact.Hospital.number}}">{{contact.Hospital.number}}</a></td>
+				  	</tr>
+				{% endfor %}
+			 	</tbody>
+			</table>
+		</div>	
+	</div>
+</div>
 
 
 <script type="text/javascript">
