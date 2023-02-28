@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['covidstatustracker.herokuapp.com', '127.0.0.1', '2335-112-135-75-33.ngrok.io']
+ALLOWED_HOSTS = ['covidstatustracker.herokuapp.com','web-production-d662.up.railway.app', '127.0.0.1', '2335-112-135-75-33.ngrok.io']
 
 
 # Application definition
